@@ -1,0 +1,848 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Attentia DM-1 | Product Design</title>
+  <meta name="description" content="Attentia DM-1 Driver Monitor - AI-Powered Distraction Detection System">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Attentia DM-1 | Product Design Sheet">
+  <meta property="og:description" content="Interactive product design sheet for the Attentia DM-1 driver monitoring system.">
+  <meta property="og:url" content="https://prahaasn.github.io/attentia-design/">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Attentia DM-1 | Product Design Sheet">
+  <meta name="twitter:description" content="Interactive product design sheet for the Attentia DM-1 driver monitoring system.">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect fill='%2300B4D8' rx='20' width='100' height='100'/><text x='50' y='72' font-size='60' font-weight='bold' fill='white' text-anchor='middle'>A</text></svg>">
+  <script crossorigin src="https://unpkg.com/react@18.2.0/umd/react.production.min.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@18.2.0/umd/react-dom.production.min.js"></script>
+  <script crossorigin src="https://unpkg.com/@babel/standalone@7.23.9/babel.min.js"></script>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background: #08080A; }
+    button:hover { filter: brightness(1.2); }
+    ::-webkit-scrollbar { width: 3px; }
+    ::-webkit-scrollbar-thumb { background: #222; border-radius: 3px; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+  </style>
+</head>
+<body>
+  <div id="root">
+    <div style="display:flex;align-items:center;justify-content:center;height:100vh;background:#08080A;">
+      <div style="text-align:center;">
+        <div style="width:36px;height:36px;border:3px solid rgba(0,180,216,0.2);border-top-color:#00B4D8;border-radius:50%;animation:spin 0.8s linear infinite;margin:0 auto 14px;"></div>
+        <p style="color:#00B4D8;font-size:13px;font-family:system-ui,sans-serif;opacity:0.7;">Loading Attentia DM-1...</p>
+      </div>
+    </div>
+  </div>
+  <script type="text/babel">
+const { useState } = React;
+
+/*
+ * ATTENTIA DM-1 — Product Design Sheet
+ * Cream/White Shell · 98 × 58 × 32mm · Production-Ready
+ */
+
+function SharedDefs() {
+  return (
+    <defs>
+      <linearGradient id="bodyMain" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stopColor="#F7F3EC" />
+        <stop offset="12%" stopColor="#F0ECE4" />
+        <stop offset="75%" stopColor="#E8E3DA" />
+        <stop offset="100%" stopColor="#E0DBD0" />
+      </linearGradient>
+      <linearGradient id="bodyFace" x1="0" y1="0" x2="0.05" y2="1">
+        <stop offset="0%" stopColor="#EFEBE3" />
+        <stop offset="100%" stopColor="#E5E0D6" />
+      </linearGradient>
+      <linearGradient id="bodyLeft" x1="1" y1="0" x2="0" y2="0.1">
+        <stop offset="0%" stopColor="#E8E3DA" />
+        <stop offset="50%" stopColor="#EDEAE2" />
+        <stop offset="100%" stopColor="#E0DBD0" />
+      </linearGradient>
+      <linearGradient id="bodyTop" x1="0" y1="1" x2="0" y2="0">
+        <stop offset="0%" stopColor="#E8E3DA" />
+        <stop offset="100%" stopColor="#F0ECE4" />
+      </linearGradient>
+      <linearGradient id="bodyBack" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stopColor="#EBE7DF" />
+        <stop offset="100%" stopColor="#E2DDD3" />
+      </linearGradient>
+      <radialGradient id="lensBarrel" cx="48%" cy="42%" r="52%">
+        <stop offset="0%" stopColor="#38363E" />
+        <stop offset="50%" stopColor="#1E1C24" />
+        <stop offset="100%" stopColor="#0E0C14" />
+      </radialGradient>
+      <radialGradient id="lensGlass" cx="36%" cy="30%" r="56%">
+        <stop offset="0%" stopColor="#201548" />
+        <stop offset="40%" stopColor="#0C0824" />
+        <stop offset="100%" stopColor="#06041A" />
+      </radialGradient>
+      <radialGradient id="lensFlare" cx="32%" cy="28%" r="44%">
+        <stop offset="0%" stopColor="rgba(200,210,255,0.38)" />
+        <stop offset="100%" stopColor="rgba(0,0,0,0)" />
+      </radialGradient>
+      <radialGradient id="irLed" cx="50%" cy="38%" r="55%">
+        <stop offset="0%" stopColor="#481828" />
+        <stop offset="100%" stopColor="#2C1018" />
+      </radialGradient>
+      <linearGradient id="ledBar" x1="0" y1="0" x2="1" y2="0">
+        <stop offset="0%" stopColor="rgba(0,180,216,0.1)" />
+        <stop offset="20%" stopColor="#00B8D8" />
+        <stop offset="80%" stopColor="#00B8D8" />
+        <stop offset="100%" stopColor="rgba(0,180,216,0.1)" />
+      </linearGradient>
+      <linearGradient id="mountArm" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stopColor="#E8E3DA" />
+        <stop offset="100%" stopColor="#DBD6CC" />
+      </linearGradient>
+      <filter id="bodyShadow">
+        <feDropShadow dx="0" dy="8" stdDeviation="16" floodColor="#000" floodOpacity="0.18" />
+      </filter>
+      <filter id="softShadow">
+        <feDropShadow dx="0" dy="3" stdDeviation="5" floodColor="#000" floodOpacity="0.12" />
+      </filter>
+      <filter id="inset">
+        <feDropShadow dx="0" dy="1" stdDeviation="1.5" floodColor="#000" floodOpacity="0.06" />
+      </filter>
+      <filter id="ledGlow">
+        <feGaussianBlur stdDeviation="5" />
+      </filter>
+      <filter id="ledGlowSmall">
+        <feGaussianBlur stdDeviation="3" />
+      </filter>
+    </defs>
+  );
+}
+
+function GrilleDots({ cx, cy, w, h, dotR = 1.35, spacing = 4.8 }) {
+  const dots = [];
+  const cols = Math.floor((w - 10) / spacing);
+  const rows = Math.floor((h - 10) / (spacing * 0.87));
+  for (let row = 0; row < rows; row++) {
+    const offX = row % 2 === 0 ? 0 : spacing / 2;
+    for (let col = 0; col < cols; col++) {
+      const x = cx - w / 2 + 6 + col * spacing + offX;
+      const y = cy - h / 2 + 6 + row * spacing * 0.87;
+      const dx = (x - cx) / (w / 2 - 4);
+      const dy = (y - cy) / (h / 2 - 4);
+      if (dx * dx + dy * dy > 0.85) continue;
+      if (x < cx - w / 2 + 4 || x > cx + w / 2 - 4) continue;
+      if (y < cy - h / 2 + 4 || y > cy + h / 2 - 4) continue;
+      dots.push(<circle key={`${row}-${col}`} cx={x} cy={y} r={dotR} fill="#A8A298" />);
+    }
+  }
+  return <>{dots}</>;
+}
+
+function HeroFront() {
+  const W = 600, H = 420;
+  const bw = 280, bh = 168;
+  const ox = (W - bw) / 2, oy = 125;
+  const R = 18;
+  const camX = ox + bw * 0.26, camY = oy + bh * 0.44;
+  const camR = 24;
+  const spkX = ox + bw * 0.72, spkY = oy + bh * 0.42;
+  const spkW = 58, spkH = 48;
+
+  return (
+    <svg viewBox={`0 0 ${W} ${H}`} width="100%" style={{ display: "block", maxWidth: 700 }}>
+      <SharedDefs />
+      <rect x={ox} y={oy} width={bw} height={bh} rx={R}
+        fill="url(#bodyMain)" filter="url(#bodyShadow)" />
+      <rect x={ox + R} y={oy + 0.5} width={bw - R * 2} height={1} rx={0.5}
+        fill="rgba(255,255,255,0.55)" />
+      <rect x={ox + 7} y={oy + 6} width={bw - 14} height={bh - 12} rx={R - 5}
+        fill="url(#bodyFace)" stroke="#D8D3C8" strokeWidth="0.3" filter="url(#inset)" />
+      <line x1={ox + 6} y1={oy + bh * 0.56} x2={ox + bw - 6} y2={oy + bh * 0.56}
+        stroke="#D5D0C6" strokeWidth="0.4" />
+
+      <circle cx={camX} cy={camY} r={camR + 3.5} fill="none" stroke="#CDCAC2" strokeWidth="3.5" />
+      <circle cx={camX} cy={camY} r={camR + 1.5} fill="none" stroke="#BAB6AE" strokeWidth="0.6" />
+      <circle cx={camX} cy={camY} r={camR} fill="url(#lensBarrel)" />
+      <circle cx={camX} cy={camY} r={camR * 0.7} fill="none" stroke="#505058" strokeWidth="1" />
+      <circle cx={camX} cy={camY} r={camR * 0.66} fill="url(#lensGlass)" />
+      <circle cx={camX} cy={camY} r={camR * 0.66} fill="url(#lensFlare)" />
+      <circle cx={camX} cy={camY} r={camR * 0.3} fill="#06041A" stroke="#28263A" strokeWidth="0.4" />
+      <circle cx={camX - 6} cy={camY - 5} r={2.5} fill="rgba(220,228,255,0.32)" />
+      <circle cx={camX + 9} cy={camY + 7} r={1.5} fill="rgba(180,190,235,0.14)" />
+
+      {[[camX - camR - 17, camY - 20], [camX + camR + 17, camY - 20],
+        [camX - camR - 17, camY + 20], [camX + camR + 17, camY + 20]
+      ].map(([x, y], i) => (
+        <g key={i}>
+          <circle cx={x} cy={y} r={7} fill="#E8E3DA" stroke="#D5D0C6" strokeWidth="0.5" />
+          <circle cx={x} cy={y} r={5.5} fill="url(#irLed)" />
+          <circle cx={x} cy={y} r={2.5} fill="#380E18" />
+        </g>
+      ))}
+
+      <rect x={spkX - spkW / 2} y={spkY - spkH / 2} width={spkW} height={spkH} rx={10}
+        fill="#D8D3C8" stroke="#CCC7BC" strokeWidth="0.4" filter="url(#inset)" />
+      <GrilleDots cx={spkX} cy={spkY} w={spkW} h={spkH} dotR={1.4} spacing={5} />
+
+      <rect x={ox + bw * 0.24} y={oy + bh - 22} width={bw * 0.52} height={2.4} rx={1.2} fill="url(#ledBar)" />
+      <rect x={ox + bw * 0.24} y={oy + bh - 22} width={bw * 0.52} height={2.4} rx={1.2}
+        fill="url(#ledBar)" opacity="0.3" filter="url(#ledGlow)" />
+
+      <text x={ox + bw / 2} y={oy + bh - 11} fill="#C8C3B8" fontSize="6"
+        fontFamily="'SF Pro Display', -apple-system, system-ui, sans-serif"
+        fontWeight="600" letterSpacing="3.8" textAnchor="middle">ATTENTIA</text>
+
+      <g stroke="#00B4D8" strokeWidth="0.4" opacity="0.4" fill="none">
+        <line x1={ox} y1={oy + bh + 28} x2={ox + bw} y2={oy + bh + 28} />
+        <line x1={ox} y1={oy + bh + 22} x2={ox} y2={oy + bh + 34} />
+        <line x1={ox + bw} y1={oy + bh + 22} x2={ox + bw} y2={oy + bh + 34} />
+        <line x1={ox - 28} y1={oy} x2={ox - 28} y2={oy + bh} />
+        <line x1={ox - 34} y1={oy} x2={ox - 22} y2={oy} />
+        <line x1={ox - 34} y1={oy + bh} x2={ox - 22} y2={oy + bh} />
+      </g>
+      <text x={ox + bw / 2} y={oy + bh + 40} fill="#00B4D8" fontSize="9"
+        fontFamily="'SF Mono', monospace" textAnchor="middle" opacity="0.5">98 mm</text>
+      <text x={ox - 32} y={oy + bh / 2 + 3} fill="#00B4D8" fontSize="9"
+        fontFamily="'SF Mono', monospace" textAnchor="middle" opacity="0.5"
+        transform={`rotate(-90, ${ox - 32}, ${oy + bh / 2})`}>58 mm</text>
+
+      {[
+        { fx: camX, fy: camY, tx: 42, ty: camY - 35, label: "IR Camera", sub: "IMX219 · 2MP · 77° FOV", left: true },
+        { fx: camX - camR - 17, fy: camY - 20, tx: 42, ty: camY - 75, label: "IR LEDs ×4", sub: "850nm · Night Vision", left: true },
+        { fx: spkX, fy: spkY, tx: W - 42, ty: spkY - 20, label: "Speaker Grille", sub: "1W 8Ω · Audio Alerts", left: false },
+        { fx: ox + bw * 0.5, fy: oy + bh - 22, tx: W - 42, ty: oy + bh - 32, label: "Status LED", sub: "RGB · Breathing Pulse", left: false },
+      ].map((c, i) => (
+        <g key={i}>
+          <circle cx={c.fx} cy={c.fy} r={3} fill="none" stroke="#00B4D8" strokeWidth="0.7" opacity="0.5" />
+          <circle cx={c.fx} cy={c.fy} r={1.2} fill="#00B4D8" opacity="0.5" />
+          <path d={`M${c.fx},${c.fy} Q${c.left ? c.fx - 30 : c.fx + 30},${c.ty} ${c.tx},${c.ty}`}
+            stroke="#00B4D8" strokeWidth="0.4" fill="none" opacity="0.25" />
+          <text x={c.tx + (c.left ? 2 : -2)} y={c.ty - 2} fill="#C4C4C8" fontSize="9" fontWeight="600"
+            fontFamily="'SF Pro Text', sans-serif" textAnchor={c.left ? "start" : "end"}>{c.label}</text>
+          <text x={c.tx + (c.left ? 2 : -2)} y={c.ty + 10} fill="#606068" fontSize="7"
+            fontFamily="'SF Pro Text', sans-serif" textAnchor={c.left ? "start" : "end"}>{c.sub}</text>
+        </g>
+      ))}
+    </svg>
+  );
+}
+
+function FrontClean({ s = 1 }) {
+  const bw = 200 * s, bh = 120 * s, pad = 20 * s;
+  const W = bw + pad * 2, H = bh + pad * 2;
+  const ox = pad, oy = pad, R = 14 * s;
+  const camX = ox + bw * 0.26, camY = oy + bh * 0.44, camR = 18 * s;
+  const spkX = ox + bw * 0.72, spkY = oy + bh * 0.42;
+  const spkW = 42 * s, spkH = 36 * s;
+
+  return (
+    <svg viewBox={`0 0 ${W} ${H}`} width="100%" style={{ display: "block", maxWidth: 500 }}>
+      <SharedDefs />
+      <rect x={ox} y={oy} width={bw} height={bh} rx={R} fill="url(#bodyMain)" filter="url(#softShadow)" />
+      <rect x={ox + R} y={oy + 0.5} width={bw - R * 2} height={0.8} rx={0.4} fill="rgba(255,255,255,0.5)" />
+      <rect x={ox + 5 * s} y={oy + 4 * s} width={bw - 10 * s} height={bh - 8 * s} rx={R - 4}
+        fill="url(#bodyFace)" stroke="#D8D3C8" strokeWidth="0.3" filter="url(#inset)" />
+      <line x1={ox + 5 * s} y1={oy + bh * 0.56} x2={ox + bw - 5 * s} y2={oy + bh * 0.56} stroke="#D5D0C6" strokeWidth="0.35" />
+      <circle cx={camX} cy={camY} r={camR + 2.5} fill="none" stroke="#CDCAC2" strokeWidth={2.5 * s} />
+      <circle cx={camX} cy={camY} r={camR} fill="url(#lensBarrel)" />
+      <circle cx={camX} cy={camY} r={camR * 0.7} fill="none" stroke="#505058" strokeWidth={0.8 * s} />
+      <circle cx={camX} cy={camY} r={camR * 0.66} fill="url(#lensGlass)" />
+      <circle cx={camX} cy={camY} r={camR * 0.66} fill="url(#lensFlare)" />
+      <circle cx={camX} cy={camY} r={camR * 0.3} fill="#06041A" stroke="#28263A" strokeWidth="0.3" />
+      <circle cx={camX - 4 * s} cy={camY - 3 * s} r={1.8 * s} fill="rgba(220,228,255,0.3)" />
+      {[[camX - camR - 12 * s, camY - 14 * s], [camX + camR + 12 * s, camY - 14 * s],
+        [camX - camR - 12 * s, camY + 14 * s], [camX + camR + 12 * s, camY + 14 * s]
+      ].map(([x, y], i) => (
+        <g key={i}>
+          <circle cx={x} cy={y} r={5 * s} fill="#E8E3DA" stroke="#D5D0C6" strokeWidth="0.4" />
+          <circle cx={x} cy={y} r={4 * s} fill="url(#irLed)" />
+          <circle cx={x} cy={y} r={1.8 * s} fill="#380E18" />
+        </g>
+      ))}
+      <rect x={spkX - spkW / 2} y={spkY - spkH / 2} width={spkW} height={spkH} rx={8 * s}
+        fill="#D8D3C8" stroke="#CCC7BC" strokeWidth="0.3" filter="url(#inset)" />
+      <GrilleDots cx={spkX} cy={spkY} w={spkW} h={spkH} dotR={1.1 * s} spacing={4 * s} />
+      <rect x={ox + bw * 0.24} y={oy + bh - 16 * s} width={bw * 0.52} height={1.8 * s} rx={0.9 * s} fill="url(#ledBar)" />
+      <rect x={ox + bw * 0.24} y={oy + bh - 16 * s} width={bw * 0.52} height={1.8 * s} rx={0.9 * s}
+        fill="url(#ledBar)" opacity="0.25" filter="url(#ledGlowSmall)" />
+      <text x={ox + bw / 2} y={oy + bh - 8 * s} fill="#C8C3B8" fontSize={4.5 * s}
+        fontFamily="'SF Pro Display', sans-serif" fontWeight="600" letterSpacing={3 * s} textAnchor="middle">ATTENTIA</text>
+    </svg>
+  );
+}
+
+function SideClean({ s = 1 }) {
+  const bw = 40 * s, bh = 95 * s, pad = 30 * s;
+  const W = bw + pad * 3, H = bh + pad * 4;
+  const ox = pad * 1.5, oy = pad * 2.5;
+  return (
+    <svg viewBox={`0 0 ${W} ${H}`} width="100%" style={{ display: "block", maxWidth: 200 }}>
+      <SharedDefs />
+      <ellipse cx={ox + bw / 2} cy={oy - bh * 0.48} rx={16 * s} ry={4 * s} fill="#DBD6CC" stroke="#CCC7BC" strokeWidth="0.4" />
+      <path d={`M${ox + bw / 2},${oy - bh * 0.44} C${ox + bw / 2 - 1},${oy - bh * 0.25} ${ox + bw / 2 + 3},${oy - bh * 0.08} ${ox + bw / 2 + 1},${oy - 2}`}
+        stroke="url(#mountArm)" strokeWidth={7 * s} fill="none" strokeLinecap="round" />
+      <path d={`M${ox + bw / 2 + 1},${oy - bh * 0.42} C${ox + bw / 2},${oy - bh * 0.25} ${ox + bw / 2 + 4},${oy - bh * 0.08} ${ox + bw / 2 + 2},${oy - 2}`}
+        stroke="rgba(255,255,255,0.12)" strokeWidth={1.5} fill="none" strokeLinecap="round" />
+      <circle cx={ox + bw / 2 + 1} cy={oy} r={6 * s} fill="#E0DBD0" stroke="#CCC7BC" strokeWidth="0.4" />
+      <rect x={ox} y={oy + 4} width={bw} height={bh} rx={8 * s} fill="url(#bodyLeft)" filter="url(#softShadow)" />
+      <line x1={ox + 8 * s} y1={oy + 4.6} x2={ox + bw - 8 * s} y2={oy + 4.6} stroke="rgba(255,255,255,0.3)" strokeWidth="0.4" />
+      <line x1={ox + bw - 0.5} y1={oy + 10} x2={ox + bw - 0.5} y2={oy + bh - 6} stroke="#D5D0C6" strokeWidth="0.6" />
+      <line x1={ox + 3} y1={oy + 4 + bh * 0.56} x2={ox + bw - 3} y2={oy + 4 + bh * 0.56} stroke="#D5D0C6" strokeWidth="0.3" />
+      <ellipse cx={ox + bw + 0.5} cy={oy + 4 + bh * 0.34} rx={2} ry={7 * s} fill="#1E1C24" stroke="#BAB6AE" strokeWidth="0.5" />
+      {[...Array(4)].map((_, i) => (
+        <rect key={i} x={ox + 1} y={oy + 4 + bh * 0.28 + i * 5 * s} width={1.5} height={2.5 * s} rx={0.75} fill="#D5D0C6" />
+      ))}
+      <rect x={ox + bw / 2 - 6 * s} y={oy + 4 + bh} width={12 * s} height={3.5 * s} rx={1.5} fill="#CCC7BC" stroke="#BAB6AE" strokeWidth="0.3" />
+      <rect x={ox + bw / 2 - 4 * s} y={oy + 4 + bh + 0.5} width={8 * s} height={2 * s} rx={1} fill="#888" />
+      <path d={`M${ox + bw / 2},${oy + 4 + bh + 4 * s} C${ox + bw / 2},${oy + bh + 20 * s} ${ox + bw / 2 - 10 * s},${oy + bh + 35 * s} ${ox + bw / 2 - 16 * s},${oy + bh + 48 * s}`}
+        stroke="#777" strokeWidth={3} fill="none" strokeLinecap="round" />
+    </svg>
+  );
+}
+
+function TopClean({ s = 1 }) {
+  const bw = 200 * s, bh = 42 * s, pad = 16 * s;
+  const W = bw + pad * 2, H = bh + pad * 2;
+  return (
+    <svg viewBox={`0 0 ${W} ${H}`} width="100%" style={{ display: "block", maxWidth: 500 }}>
+      <SharedDefs />
+      <rect x={pad} y={pad} width={bw} height={bh} rx={8 * s} fill="url(#bodyTop)" stroke="#D8D3C8" strokeWidth="0.35" />
+      <rect x={pad + 8 * s} y={pad + 0.5} width={bw - 16 * s} height={0.6} rx={0.3} fill="rgba(255,255,255,0.3)" />
+      <circle cx={pad + bw / 2} cy={pad + 3 * s} r={8 * s} fill="#E0DBD0" stroke="#D5D0C6" strokeWidth="0.4" />
+      <circle cx={pad + bw / 2} cy={pad + 3 * s} r={4.5 * s} fill="#D5D0C6" />
+    </svg>
+  );
+}
+
+function BackClean({ s = 1 }) {
+  const bw = 200 * s, bh = 120 * s, pad = 16 * s;
+  const W = bw + pad * 2, H = bh + pad * 2;
+  const ox = pad, oy = pad;
+  return (
+    <svg viewBox={`0 0 ${W} ${H}`} width="100%" style={{ display: "block", maxWidth: 500 }}>
+      <SharedDefs />
+      <rect x={ox} y={oy} width={bw} height={bh} rx={14 * s} fill="url(#bodyBack)" stroke="#D8D3C8" strokeWidth="0.35" />
+      <rect x={ox + bw / 2 - 12 * s} y={oy + 12 * s} width={24 * s} height={18 * s} rx={5 * s} fill="#E0DBD0" stroke="#D5D0C6" strokeWidth="0.4" />
+      <circle cx={ox + bw / 2} cy={oy + 21 * s} r={5 * s} fill="#D5D0C6" />
+      <circle cx={ox + bw / 2} cy={oy + 21 * s} r={2.5 * s} fill="#CCC7BC" />
+      {[
+        [0.48, "ATTENTIA DM-1 · FCC ID: 2A4XX-DM1", 4.5],
+        [0.55, "5V ⎓ 3A · Input: 15W Max", 4],
+        [0.61, "Model: ATT-DM1-001", 4],
+        [0.67, "Designed in USA · Made in China", 3.8],
+      ].map(([yp, text, sz], i) => (
+        <text key={i} x={ox + bw / 2} y={oy + bh * yp} textAnchor="middle" fill="#CCC7BC"
+          fontSize={sz * s} fontFamily="'SF Mono', monospace">{text}</text>
+      ))}
+      <rect x={ox + bw / 2 - 10 * s} y={oy + bh * 0.72} width={20 * s} height={20 * s} rx={2}
+        fill="#D8D3C8" stroke="#CCC7BC" strokeWidth="0.3" />
+      <text x={ox + bw / 2} y={oy + bh * 0.72 + 11 * s} textAnchor="middle"
+        fill="#BAB6AE" fontSize={3.5 * s} fontFamily="monospace">QR</text>
+    </svg>
+  );
+}
+
+function MountDevice({ x, y, scale = 1 }) {
+  const w = 98 * scale, h = 60 * scale;
+  const ox = x - w / 2, oy = y - h / 2;
+  const camX = ox + w * 0.26, camY = oy + h * 0.46;
+  const camR = 12 * scale;
+  const spkX = ox + w * 0.72, spkY = oy + h * 0.44;
+  const spkW = 28 * scale, spkH = 22 * scale;
+
+  return (
+    <g>
+      <rect x={ox} y={oy} width={w} height={h} rx={10 * scale}
+        fill="url(#bodyMain)" filter="url(#softShadow)" />
+      <rect x={ox + 10 * scale} y={oy + 0.5} width={w - 20 * scale} height={0.8 * scale} rx={0.4}
+        fill="rgba(255,255,255,0.5)" />
+      <rect x={ox + 4 * scale} y={oy + 3 * scale} width={w - 8 * scale} height={h - 6 * scale} rx={7 * scale}
+        fill="url(#bodyFace)" stroke="#D8D3C8" strokeWidth="0.3" filter="url(#inset)" />
+      <line x1={ox + 4 * scale} y1={oy + h * 0.56} x2={ox + w - 4 * scale} y2={oy + h * 0.56}
+        stroke="#D5D0C6" strokeWidth="0.3" />
+      <circle cx={camX} cy={camY} r={camR + 2} fill="none" stroke="#CDCAC2" strokeWidth={2 * scale} />
+      <circle cx={camX} cy={camY} r={camR} fill="url(#lensBarrel)" />
+      <circle cx={camX} cy={camY} r={camR * 0.68} fill="url(#lensGlass)" />
+      <circle cx={camX} cy={camY} r={camR * 0.68} fill="url(#lensFlare)" />
+      <circle cx={camX} cy={camY} r={camR * 0.3} fill="#06041A" />
+      <circle cx={camX - 3 * scale} cy={camY - 2 * scale} r={1.5 * scale} fill="rgba(220,228,255,0.28)" />
+      {[[camX - camR - 8 * scale, camY - 10 * scale], [camX + camR + 8 * scale, camY - 10 * scale],
+        [camX - camR - 8 * scale, camY + 10 * scale], [camX + camR + 8 * scale, camY + 10 * scale]
+      ].map(([lx, ly], i) => (
+        <g key={i}>
+          <circle cx={lx} cy={ly} r={4 * scale} fill="#E8E3DA" stroke="#D5D0C6" strokeWidth="0.3" />
+          <circle cx={lx} cy={ly} r={3 * scale} fill="url(#irLed)" />
+          <circle cx={lx} cy={ly} r={1.3 * scale} fill="#380E18" />
+        </g>
+      ))}
+      <rect x={spkX - spkW / 2} y={spkY - spkH / 2} width={spkW} height={spkH} rx={5 * scale}
+        fill="#D8D3C8" stroke="#CCC7BC" strokeWidth="0.3" filter="url(#inset)" />
+      {[...Array(3)].map((_, r) =>
+        [...Array(4)].map((_, c) => (
+          <circle key={`${r}-${c}`} cx={spkX - 8 * scale + c * 5.5 * scale} cy={spkY - 5 * scale + r * 5 * scale}
+            r={1 * scale} fill="#A8A298" />
+        ))
+      )}
+      <rect x={ox + w * 0.24} y={oy + h - 10 * scale} width={w * 0.52} height={1.6 * scale} rx={0.8 * scale}
+        fill="url(#ledBar)" />
+      <rect x={ox + w * 0.24} y={oy + h - 10 * scale} width={w * 0.52} height={1.6 * scale} rx={0.8 * scale}
+        fill="url(#ledBar)" opacity="0.25" filter="url(#ledGlowSmall)" />
+      <text x={x} y={oy + h - 4 * scale} fill="#C8C3B8" fontSize={4 * scale}
+        fontFamily="'SF Pro Display', sans-serif" fontWeight="600" letterSpacing={2 * scale} textAnchor="middle">ATTENTIA</text>
+    </g>
+  );
+}
+
+function WindshieldMount() {
+  const W = 280, H = 340;
+  const mid = W / 2;
+
+  return (
+    <svg viewBox={`0 0 ${W} ${H}`} width="100%" style={{ display: "block", maxWidth: 400 }}>
+      <SharedDefs />
+      <defs>
+        <linearGradient id="windshieldGlass" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stopColor="#1E3040" />
+          <stop offset="50%" stopColor="#142430" />
+          <stop offset="100%" stopColor="#0E1820" />
+        </linearGradient>
+        <linearGradient id="armGrad" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stopColor="#F0ECE4" />
+          <stop offset="50%" stopColor="#E4E0D6" />
+          <stop offset="100%" stopColor="#D8D4CA" />
+        </linearGradient>
+        <radialGradient id="ballJoint" cx="35%" cy="30%" r="65%">
+          <stop offset="0%" stopColor="#F0ECE4" />
+          <stop offset="60%" stopColor="#D8D4CA" />
+          <stop offset="100%" stopColor="#C8C4BA" />
+        </radialGradient>
+        <linearGradient id="adhesive3m" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stopColor="#E8E4DA" />
+          <stop offset="100%" stopColor="#D0CCC2" />
+        </linearGradient>
+        <filter id="mountShadow">
+          <feDropShadow dx="0" dy="6" stdDeviation="10" floodColor="#000" floodOpacity="0.25" />
+        </filter>
+      </defs>
+
+      <path d={`M20,15 Q${mid},0 ${W - 20},15 L${W - 35},75 Q${mid},62 35,75 Z`}
+        fill="url(#windshieldGlass)" stroke="#2A4050" strokeWidth="0.6" />
+      <path d={`M45,25 Q${mid},14 ${W - 55},28`}
+        stroke="rgba(100,150,180,0.12)" strokeWidth="12" fill="none" strokeLinecap="round" />
+      <text x={mid} y={18} textAnchor="middle" fill="#4A6070" fontSize="6"
+        fontFamily="'SF Pro Text', sans-serif" fontWeight="500" letterSpacing="1.5">WINDSHIELD</text>
+
+      <ellipse cx={mid} cy={58} rx={18} ry={5} fill="url(#adhesive3m)" stroke="#C0BCB2" strokeWidth="0.5" />
+      <ellipse cx={mid} cy={58} rx={14} ry={3.5} fill="none" stroke="#BAB6AC" strokeWidth="0.3" strokeDasharray="2 1.5" />
+      <text x={mid} y={60.5} textAnchor="middle" fill="#A09890" fontSize="3.2"
+        fontFamily="'SF Mono', monospace" fontWeight="500">3M VHB</text>
+
+      <path d={`M${mid},${64} C${mid - 3},${85} ${mid + 8},${110} ${mid + 5},${135} C${mid + 3},${150} ${mid - 2},${160} ${mid},${175}`}
+        stroke="url(#armGrad)" strokeWidth="9" fill="none" strokeLinecap="round" filter="url(#softShadow)" />
+      <path d={`M${mid + 0.5},${66} C${mid - 2},${85} ${mid + 9},${110} ${mid + 6},${135} C${mid + 4},${150} ${mid - 1},${160} ${mid + 1},${173}`}
+        stroke="rgba(255,255,255,0.2)" strokeWidth="2" fill="none" strokeLinecap="round" />
+      <path d={`M${mid - 0.5},${66} C${mid - 4},${85} ${mid + 7},${110} ${mid + 4},${135} C${mid + 2},${150} ${mid - 3},${160} ${mid - 1},${173}`}
+        stroke="rgba(0,0,0,0.08)" strokeWidth="2" fill="none" strokeLinecap="round" />
+
+      <circle cx={mid} cy={182} r={11} fill="url(#ballJoint)" filter="url(#softShadow)" />
+      <circle cx={mid - 3} cy={179} r={4} fill="rgba(255,255,255,0.15)" />
+      <ellipse cx={mid} cy={187} rx={8} ry={3} fill="rgba(0,0,0,0.06)" />
+      <circle cx={mid} cy={182} r={11} fill="none" stroke="#C4C0B6" strokeWidth="0.5" />
+
+      <rect x={mid - 8} y={192} width={16} height={8} rx={2}
+        fill="#D8D4CA" stroke="#C4C0B6" strokeWidth="0.4" />
+      <rect x={mid - 5} y={194} width={10} height={4} rx={1} fill="#C8C4BA" />
+
+      <g transform={`translate(${mid}, 242)`}>
+        <MountDevice x={0} y={0} scale={0.85} />
+      </g>
+
+      <rect x={mid - 4} y={284} width={8} height={4} rx={1.5} fill="#888" stroke="#666" strokeWidth="0.3" />
+      <path d={`M${mid},${289} C${mid},${305} ${mid - 12},${320} ${mid - 22},${335}`}
+        stroke="#555" strokeWidth="3" fill="none" strokeLinecap="round" />
+      <path d={`M${mid + 0.5},${290} C${mid + 0.5},${305} ${mid - 11},${320} ${mid - 21},${334}`}
+        stroke="rgba(255,255,255,0.08)" strokeWidth="1" fill="none" strokeLinecap="round" />
+    </svg>
+  );
+}
+
+function MirrorMount() {
+  const W = 280, H = 340;
+  const mid = W / 2;
+
+  return (
+    <svg viewBox={`0 0 ${W} ${H}`} width="100%" style={{ display: "block", maxWidth: 400 }}>
+      <SharedDefs />
+      <defs>
+        <linearGradient id="mirrorHousing" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stopColor="#2A2A2E" />
+          <stop offset="50%" stopColor="#1E1E22" />
+          <stop offset="100%" stopColor="#141418" />
+        </linearGradient>
+        <linearGradient id="mirrorGlass" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stopColor="#3A4550" />
+          <stop offset="50%" stopColor="#2A3540" />
+          <stop offset="100%" stopColor="#1E2830" />
+        </linearGradient>
+        <linearGradient id="mirrorStem" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stopColor="#2A2A2E" />
+          <stop offset="100%" stopColor="#1A1A1E" />
+        </linearGradient>
+        <linearGradient id="clampGrad" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stopColor="#E8E4DA" />
+          <stop offset="100%" stopColor="#D4D0C6" />
+        </linearGradient>
+        <radialGradient id="ballJoint2" cx="35%" cy="30%" r="65%">
+          <stop offset="0%" stopColor="#F0ECE4" />
+          <stop offset="60%" stopColor="#D8D4CA" />
+          <stop offset="100%" stopColor="#C8C4BA" />
+        </radialGradient>
+      </defs>
+
+      <path d={`M0,0 L${W},0 L${W},40 Q${mid},32 0,40 Z`}
+        fill="#142430" stroke="#2A4050" strokeWidth="0.5" />
+      <text x={mid} y={14} textAnchor="middle" fill="#3A5060" fontSize="5.5"
+        fontFamily="'SF Pro Text', sans-serif" fontWeight="500" letterSpacing="1.5">WINDSHIELD</text>
+
+      <path d={`M${mid},${36} L${mid},${58}`}
+        stroke="url(#mirrorStem)" strokeWidth="10" strokeLinecap="round" />
+      <path d={`M${mid + 1},${38} L${mid + 1},${56}`}
+        stroke="rgba(255,255,255,0.06)" strokeWidth="2" strokeLinecap="round" />
+
+      <rect x={mid - 50} y={58} width={100} height={42} rx={6}
+        fill="url(#mirrorHousing)" filter="url(#softShadow)" />
+      <rect x={mid - 44} y={62} width={88} height={34} rx={3}
+        fill="url(#mirrorGlass)" stroke="#3A4550" strokeWidth="0.4" />
+      <path d={`M${mid - 38},${68} Q${mid},${65} ${mid + 38},${70}`}
+        stroke="rgba(100,140,160,0.15)" strokeWidth="6" fill="none" strokeLinecap="round" />
+      <text x={mid} y={82} textAnchor="middle" fill="#4A6070" fontSize="5"
+        fontFamily="'SF Pro Text', sans-serif" fontWeight="500">REARVIEW MIRROR</text>
+
+      <rect x={mid - 18} y={100} width={36} height={14} rx={3}
+        fill="url(#clampGrad)" stroke="#C4C0B6" strokeWidth="0.5" />
+      <circle cx={mid - 10} cy={107} r={3} fill="#D0CCC2" stroke="#BAB6AC" strokeWidth="0.3" />
+      <circle cx={mid - 10} cy={107} r={1.5} fill="#C0BCB2" />
+      <line x1={mid - 11.5} y1={107} x2={mid - 8.5} y2={107} stroke="#A8A498" strokeWidth="0.5" />
+      <circle cx={mid + 10} cy={107} r={3} fill="#D0CCC2" stroke="#BAB6AC" strokeWidth="0.3" />
+      <circle cx={mid + 10} cy={107} r={1.5} fill="#C0BCB2" />
+      <line x1={mid + 8.5} y1={107} x2={mid + 11.5} y2={107} stroke="#A8A498" strokeWidth="0.5" />
+      <text x={mid} y={120} textAnchor="middle" fill="#A09890" fontSize="3"
+        fontFamily="'SF Mono', monospace">CLAMP</text>
+
+      <path d={`M${mid},${114} L${mid},${145}`}
+        stroke="url(#clampGrad)" strokeWidth="8" strokeLinecap="round" filter="url(#softShadow)" />
+      <path d={`M${mid + 0.5},${116} L${mid + 0.5},${143}`}
+        stroke="rgba(255,255,255,0.15)" strokeWidth="1.5" strokeLinecap="round" />
+
+      <circle cx={mid} cy={152} r={10} fill="url(#ballJoint2)" filter="url(#softShadow)" />
+      <circle cx={mid - 2.5} cy={149} r={3.5} fill="rgba(255,255,255,0.12)" />
+      <circle cx={mid} cy={152} r={10} fill="none" stroke="#C4C0B6" strokeWidth="0.5" />
+
+      <rect x={mid - 7} y={162} width={14} height={7} rx={2}
+        fill="#D8D4CA" stroke="#C4C0B6" strokeWidth="0.4" />
+      <rect x={mid - 4} y={164} width={8} height={3} rx={1} fill="#C8C4BA" />
+
+      <g transform={`translate(${mid}, 208)`}>
+        <MountDevice x={0} y={0} scale={0.8} />
+      </g>
+
+      <rect x={mid - 3.5} y={246} width={7} height={3.5} rx={1.2} fill="#888" stroke="#666" strokeWidth="0.3" />
+      <path d={`M${mid},${250} C${mid},${265} ${mid + 15},${285} ${mid + 30},${310}`}
+        stroke="#555" strokeWidth="2.8" fill="none" strokeLinecap="round" />
+      <path d={`M${mid + 0.5},${251} C${mid + 0.5},${265} ${mid + 15.5},${285} ${mid + 30.5},${309}`}
+        stroke="rgba(255,255,255,0.08)" strokeWidth="0.8" fill="none" strokeLinecap="round" />
+
+      <rect x={W - 55} y={H - 28} width={50} height={18} rx={4}
+        fill="rgba(0,180,216,0.06)" stroke="rgba(0,180,216,0.2)" strokeWidth="0.5" />
+      <text x={W - 30} y={H - 16} textAnchor="middle" fill="#00B4D8" fontSize="5"
+        fontFamily="'SF Mono', monospace" fontWeight="600">COMPACT</text>
+    </svg>
+  );
+}
+
+function AttentiaDesign() {
+  const [tab, setTab] = useState("design");
+  const ff = "'SF Pro Display', -apple-system, 'Segoe UI', system-ui, sans-serif";
+  const accent = "#00B4D8";
+
+  const Card = ({ children, style }) => (
+    <div style={{
+      background: "rgba(255,255,255,0.018)", border: "1px solid rgba(255,255,255,0.035)",
+      borderRadius: 10, ...style,
+    }}>{children}</div>
+  );
+
+  return (
+    <div style={{ width: "100%", minHeight: "100vh", background: "#08080A", fontFamily: ff, color: "#D0D0D4" }}>
+      <header style={{
+        padding: "14px 28px", display: "flex", alignItems: "center", justifyContent: "space-between",
+        borderBottom: "1px solid rgba(255,255,255,0.04)", position: "sticky", top: 0, background: "#08080A", zIndex: 20,
+      }}>
+        <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
+          <div style={{
+            width: 30, height: 30, borderRadius: 6,
+            background: `linear-gradient(135deg, ${accent}, #0090AA)`,
+            display: "flex", alignItems: "center", justifyContent: "center",
+            fontSize: 13, fontWeight: 700, color: "#fff",
+          }}>A</div>
+          <span style={{ fontSize: 16, fontWeight: 600, letterSpacing: "0.06em" }}>ATTENTIA</span>
+          <span style={{ fontSize: 12, color: "#555", marginLeft: 4 }}>DM-1 Driver Monitor · Product Design Rev 2</span>
+        </div>
+        <div style={{ display: "flex", gap: 2 }}>
+          {["design", "views", "mount", "specs"].map(t => (
+            <button key={t} onClick={() => setTab(t)} style={{
+              padding: "7px 18px", border: "none", borderRadius: 6, cursor: "pointer",
+              background: tab === t ? "rgba(0,180,216,0.08)" : "transparent",
+              color: tab === t ? accent : "#555",
+              fontSize: 13, fontWeight: 500, fontFamily: ff, letterSpacing: "0.04em", textTransform: "capitalize",
+            }}>{t}</button>
+          ))}
+        </div>
+      </header>
+
+      <div style={{ padding: "0 28px 48px", maxWidth: 1280, width: "95vw", margin: "0 auto" }}>
+
+        {tab === "design" && (
+          <div>
+            <div style={{ textAlign: "center", paddingTop: 28 }}>
+              <div style={{ fontSize: 11, letterSpacing: "0.15em", color: "#555", fontWeight: 500 }}>FRONT VIEW — ANNOTATED</div>
+            </div>
+            <div style={{ display: "flex", justifyContent: "center", margin: "8px 0 20px" }}>
+              <HeroFront />
+            </div>
+            <Card style={{ padding: "14px 20px", marginBottom: 16, display: "flex", alignItems: "center", gap: 18 }}>
+              <span style={{ fontSize: 11, color: "#777", letterSpacing: "0.08em", fontWeight: 500 }}>SHELL COLOR</span>
+              <div style={{ display: "flex", gap: 10, alignItems: "center" }}>
+                <div style={{ width: 32, height: 32, borderRadius: 7, background: "#EDE8E0", border: "2px solid rgba(0,180,216,0.4)" }} />
+                <div>
+                  <div style={{ fontSize: 13, fontWeight: 600, color: "#B0B0B4" }}>Warm Cream</div>
+                  <div style={{ fontSize: 11, color: "#666", fontFamily: "monospace" }}>#EDE8E0 · Pantone Warm Gray 1C</div>
+                </div>
+              </div>
+              <div style={{ width: 1, height: 24, background: "rgba(255,255,255,0.04)", margin: "0 6px" }} />
+              <div style={{ display: "flex", gap: 10, alignItems: "center" }}>
+                <div style={{ width: 32, height: 32, borderRadius: 7, background: "#1E1C24", border: "1px solid #333" }} />
+                <div>
+                  <div style={{ fontSize: 13, fontWeight: 600, color: "#B0B0B4" }}>Lens / IR</div>
+                  <div style={{ fontSize: 11, color: "#666", fontFamily: "monospace" }}>#1E1C24 · Deep Black</div>
+                </div>
+              </div>
+            </Card>
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 12 }}>
+              {[
+                { icon: "◉", t: "IR Camera", d: "Sony IMX219 2MP with 77° FOV and IR-corrected M12 lens. Monitors driver face position, eye state, and head pose in real-time via MIPI CSI-2.", c: accent },
+                { icon: "◎", t: "Night Vision", d: "4× OSRAM 850nm IR LEDs at 350mA each. Invisible to human eye. Full darkness monitoring at 0.3–1.2m working range.", c: "#FF3050" },
+                { icon: "◈", t: "Speaker + Grille", d: "1W 8Ω micro speaker behind perforated grille. Honeycomb pattern for optimal acoustic output. 3-stage escalating alert system with MEMS mic calibration.", c: "#30DD70" },
+                { icon: "⚡", t: "USB-C Power", d: "Single 5V/3A (15W) USB-C input. 26ft included braided cable with right-angle plug for clean headliner routing.", c: "#FFAA20" },
+                { icon: "◆", t: "Edge AI", d: "RK3568 quad A55 + 0.8T NPU running MobileNetV3 + LSTM at 30fps. Fully on-device inference, zero cloud dependency.", c: "#8060FF" },
+                { icon: "◐", t: "Wireless", d: "ESP32-C6 for WiFi 6 + BLE 5.0. Companion app, OTA firmware, fleet management dashboard integration.", c: "#FF60A0" },
+              ].map((f, i) => (
+                <Card key={i} style={{ padding: "16px 18px" }}>
+                  <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 6 }}>
+                    <span style={{ fontSize: 16, color: f.c, opacity: 0.65 }}>{f.icon}</span>
+                    <span style={{ fontSize: 14, fontWeight: 600, color: "#C0C0C4" }}>{f.t}</span>
+                  </div>
+                  <div style={{ fontSize: 12, color: "#666", lineHeight: 1.6 }}>{f.d}</div>
+                </Card>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {tab === "views" && (
+          <div style={{ paddingTop: 24 }}>
+            <div style={{ display: "grid", gridTemplateColumns: "1fr 0.6fr", gap: 16 }}>
+              <Card style={{ padding: 20, display: "flex", flexDirection: "column", alignItems: "center" }}>
+                <div style={{ fontSize: 11, letterSpacing: "0.12em", color: "#555", fontWeight: 500, marginBottom: 10 }}>FRONT</div>
+                <FrontClean s={1.4} />
+              </Card>
+              <Card style={{ padding: 20, display: "flex", flexDirection: "column", alignItems: "center" }}>
+                <div style={{ fontSize: 11, letterSpacing: "0.12em", color: "#555", fontWeight: 500, marginBottom: 10 }}>RIGHT SIDE</div>
+                <SideClean s={1.15} />
+              </Card>
+            </div>
+            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16, marginTop: 16 }}>
+              <Card style={{ padding: 20, display: "flex", flexDirection: "column", alignItems: "center" }}>
+                <div style={{ fontSize: 11, letterSpacing: "0.12em", color: "#555", fontWeight: 500, marginBottom: 10 }}>TOP</div>
+                <TopClean s={1.4} />
+              </Card>
+              <Card style={{ padding: 20, display: "flex", flexDirection: "column", alignItems: "center" }}>
+                <div style={{ fontSize: 11, letterSpacing: "0.12em", color: "#555", fontWeight: 500, marginBottom: 10 }}>BACK</div>
+                <BackClean s={1.15} />
+              </Card>
+            </div>
+            <Card style={{
+              marginTop: 16, padding: "16px 24px", background: "rgba(0,180,216,0.015)",
+              border: "1px solid rgba(0,180,216,0.06)", display: "flex", justifyContent: "space-around",
+            }}>
+              {[["Width", "98mm"], ["Height", "58mm"], ["Depth", "32mm"], ["Weight", "89g"], ["Corner R", "8mm"], ["Lens ∅", "18mm"]].map(([l, v], i) => (
+                <div key={i} style={{ textAlign: "center" }}>
+                  <div style={{ fontSize: 10, color: "#555", letterSpacing: "0.08em", marginBottom: 3 }}>{l}</div>
+                  <div style={{ fontSize: 20, fontWeight: 600, color: accent, fontFamily: "'SF Mono', monospace" }}>{v}</div>
+                </div>
+              ))}
+            </Card>
+          </div>
+        )}
+
+        {tab === "mount" && (
+          <div style={{ paddingTop: 24 }}>
+            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 24, marginBottom: 20 }}>
+              <Card style={{ padding: 20 }}>
+                <div style={{
+                  fontSize: 11, letterSpacing: "0.12em", color: accent, fontWeight: 600,
+                  marginBottom: 14, textAlign: "center", paddingBottom: 10,
+                  borderBottom: "1px solid rgba(0,180,216,0.08)",
+                }}>OPTION A · WINDSHIELD MOUNT</div>
+                <div style={{ display: "flex", justifyContent: "center", marginBottom: 14 }}>
+                  <WindshieldMount />
+                </div>
+                <div style={{ padding: "12px 14px", background: "rgba(255,255,255,0.01)", borderRadius: 6 }}>
+                  {[
+                    ["Attachment", "3M VHB adhesive disk"],
+                    ["Hold Strength", "~2.5 kg shear force"],
+                    ["Arm Length", "35mm S-curve"],
+                    ["Adjustment", "±30° tilt · ±45° pan"],
+                    ["Best For", "Most vehicles"],
+                  ].map(([k, v], i) => (
+                    <div key={i} style={{ display: "flex", justifyContent: "space-between", padding: "5px 0", borderBottom: i < 4 ? "1px solid rgba(255,255,255,0.025)" : "none" }}>
+                      <span style={{ fontSize: 12, color: "#777" }}>{k}</span>
+                      <span style={{ fontSize: 12, color: "#B0B0B4", fontWeight: 500 }}>{v}</span>
+                    </div>
+                  ))}
+                </div>
+              </Card>
+
+              <Card style={{ padding: 20 }}>
+                <div style={{
+                  fontSize: 11, letterSpacing: "0.12em", color: "#30DD70", fontWeight: 600,
+                  marginBottom: 14, textAlign: "center", paddingBottom: 10,
+                  borderBottom: "1px solid rgba(48,221,112,0.08)",
+                }}>OPTION B · MIRROR MOUNT</div>
+                <div style={{ display: "flex", justifyContent: "center", marginBottom: 14 }}>
+                  <MirrorMount />
+                </div>
+                <div style={{ padding: "12px 14px", background: "rgba(255,255,255,0.01)", borderRadius: 6 }}>
+                  {[
+                    ["Attachment", "Clamp-on bracket"],
+                    ["Hold Strength", "Tool-free secure"],
+                    ["Arm Length", "25mm straight"],
+                    ["Adjustment", "±30° tilt · ±45° pan"],
+                    ["Best For", "Easy install / rentals"],
+                  ].map(([k, v], i) => (
+                    <div key={i} style={{ display: "flex", justifyContent: "space-between", padding: "5px 0", borderBottom: i < 4 ? "1px solid rgba(255,255,255,0.025)" : "none" }}>
+                      <span style={{ fontSize: 12, color: "#777" }}>{k}</span>
+                      <span style={{ fontSize: 12, color: "#B0B0B4", fontWeight: 500 }}>{v}</span>
+                    </div>
+                  ))}
+                </div>
+              </Card>
+            </div>
+
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 12, marginBottom: 16 }}>
+              {[
+                { n: "1", t: "3M VHB Pad", d: "25mm disk, -40°C to 90°C rated. 24hr cure for full bond.", c: accent },
+                { n: "2", t: "Ball Joint", d: "14mm stainless steel. Friction lock prevents drift.", c: accent },
+                { n: "3", t: "Quick-Release", d: "Push-button detach. Keyed connection prevents rotation.", c: accent },
+                { n: "4", t: "Cable Route", d: "Internal channel for clean USB-C management.", c: accent },
+              ].map(s => (
+                <Card key={s.n} style={{ padding: "12px 14px" }}>
+                  <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 5 }}>
+                    <div style={{
+                      width: 20, height: 20, borderRadius: "50%", flexShrink: 0,
+                      background: `${s.c}08`, border: `1px solid ${s.c}20`,
+                      display: "flex", alignItems: "center", justifyContent: "center",
+                      fontSize: 11, fontWeight: 600, color: s.c,
+                    }}>{s.n}</div>
+                    <div style={{ fontSize: 13, fontWeight: 600, color: "#B0B0B4" }}>{s.t}</div>
+                  </div>
+                  <div style={{ fontSize: 11, color: "#666", lineHeight: 1.5 }}>{s.d}</div>
+                </Card>
+              ))}
+            </div>
+
+            <Card style={{
+              padding: "14px 22px", display: "flex", justifyContent: "space-between", alignItems: "center",
+              background: "rgba(0,180,216,0.015)", border: "1px solid rgba(0,180,216,0.06)",
+            }}>
+              <div>
+                <div style={{ fontSize: 13, fontWeight: 600, color: "#0090AA", marginBottom: 3 }}>INSTALLATION TIME</div>
+                <div style={{ fontSize: 12, color: "#666" }}>Mount behind rearview mirror, camera facing driver at ~45°. Route USB-C along headliner.</div>
+              </div>
+              <div style={{ fontSize: 28, fontWeight: 700, color: accent, fontFamily: "'SF Mono', monospace" }}>&lt;5 min</div>
+            </Card>
+          </div>
+        )}
+
+        {tab === "specs" && (
+          <div style={{ paddingTop: 24 }}>
+            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 14 }}>
+              {[
+                { cat: "PHYSICAL", rows: [["Dimensions", "98 × 58 × 32 mm"], ["Weight", "89g (device only)"], ["Shell", "ABS · Warm Cream"], ["Finish", "Matte soft-touch, UV-resistant"], ["Corner Radius", "8mm external"], ["Operating Temp", "-20°C to 65°C"]] },
+                { cat: "OPTICS", rows: [["Sensor", "Sony IMX219PQ 2MP"], ["Lens", "M12 3.6mm f/2.0 IR-corrected"], ["FOV", "77° diagonal"], ["IR LEDs", "4× OSRAM SFH 4726AS"], ["Wavelength", "850nm"], ["Range", "0.3 – 1.2m"]] },
+                { cat: "COMPUTE", rows: [["SoC", "Rockchip RK3568"], ["CPU", "4× Cortex-A55 @ 2.0GHz"], ["NPU", "0.8 TOPS (INT8)"], ["RAM", "4GB LPDDR4X"], ["Storage", "32GB eMMC 5.1"], ["Wireless", "ESP32-C6 WiFi 6 + BLE 5.0"]] },
+                { cat: "AUDIO", rows: [["Speaker", "1W 8Ω micro driver"], ["Microphone", "MEMS ambient calibration"], ["Alert System", "3-stage escalation"], ["Level 1", "Chime · 60dB"], ["Level 2", "Spoken warning · 70dB"], ["Level 3", "Alarm · 80dB"]] },
+              ].map((s, i) => (
+                <Card key={i} style={{ padding: "16px 18px" }}>
+                  <div style={{
+                    fontSize: 11, letterSpacing: "0.12em", color: "#0090AA",
+                    fontWeight: 600, marginBottom: 12, paddingBottom: 6,
+                    borderBottom: "1px solid rgba(0,180,216,0.06)",
+                  }}>{s.cat}</div>
+                  {s.rows.map(([k, v], j) => (
+                    <div key={j} style={{
+                      display: "flex", justifyContent: "space-between", padding: "5px 0",
+                      borderBottom: j < s.rows.length - 1 ? "1px solid rgba(255,255,255,0.025)" : "none",
+                    }}>
+                      <span style={{ fontSize: 13, color: "#777" }}>{k}</span>
+                      <span style={{ fontSize: 13, color: "#B0B0B4", fontWeight: 500, fontFamily: "'SF Mono', monospace" }}>{v}</span>
+                    </div>
+                  ))}
+                </Card>
+              ))}
+            </div>
+            <Card style={{ padding: "16px 18px", marginTop: 16 }}>
+              <div style={{
+                fontSize: 11, letterSpacing: "0.12em", color: "#0090AA",
+                fontWeight: 600, marginBottom: 14, paddingBottom: 6,
+                borderBottom: "1px solid rgba(0,180,216,0.06)",
+              }}>MANUFACTURING PATH</div>
+              <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 14 }}>
+                {[
+                  { p: "Prototype", q: "15–20 units", m: "SLA/FDM print + finish", c: "~$95/unit" },
+                  { p: "Pilot", q: "100–500 units", m: "CNC or silicone mold", c: "~$62/unit" },
+                  { p: "Production", q: "1,000+ units", m: "Injection mold (~$6K tool)", c: "$48–55 COGS" },
+                ].map((p, i) => (
+                  <Card key={i} style={{ padding: "12px 14px" }}>
+                    <div style={{ fontSize: 14, fontWeight: 600, color: "#B0B0B4", marginBottom: 5 }}>{p.p}</div>
+                    <div style={{ fontSize: 12, color: "#666" }}>{p.q}</div>
+                    <div style={{ fontSize: 12, color: "#666", marginBottom: 5 }}>{p.m}</div>
+                    <div style={{ fontSize: 18, color: accent, fontWeight: 600, fontFamily: "'SF Mono', monospace" }}>{p.c}</div>
+                  </Card>
+                ))}
+              </div>
+            </Card>
+            <div style={{
+              marginTop: 16, padding: "16px 28px", borderRadius: 8,
+              background: "rgba(0,180,216,0.015)", border: "1px solid rgba(0,180,216,0.06)",
+              display: "flex", justifyContent: "space-between", alignItems: "center",
+            }}>
+              {[
+                { l: "Retail", v: "$165", c: accent },
+                { l: "COGS @ 1K", v: "$58–70", c: "#C0C0C4" },
+                { l: "Gross Margin", v: "~58%", c: "#30DD70" },
+              ].map((p, i) => (
+                <div key={i} style={{ textAlign: i === 0 ? "left" : i === 2 ? "right" : "center" }}>
+                  <div style={{ fontSize: 12, color: "#666" }}>{p.l}</div>
+                  <div style={{ fontSize: 30, fontWeight: 700, color: p.c, fontFamily: "'SF Mono', monospace" }}>{p.v}</div>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById('root')).render(<AttentiaDesign />);
+  </script>
+</body>
+</html>
