@@ -23,6 +23,7 @@
     ::-webkit-scrollbar { width: 3px; }
     ::-webkit-scrollbar-thumb { background: #222; border-radius: 3px; }
     @keyframes spin { to { transform: rotate(360deg); } }
+    .att-t { transition: background 0.5s ease, color 0.5s ease, border-color 0.5s ease, opacity 0.5s ease; }
   </style>
 </head>
 <body>
@@ -39,62 +40,149 @@ const { useState } = React;
 
 /*
  * ATTENTIA DM-1 — Product Design Sheet
- * Cream/White Shell · 98 × 58 × 32mm · Production-Ready
+ * Cream/White + Stealth Black Shells · 98 × 58 × 32mm · Production-Ready
  */
 
-function SharedDefs() {
+const THEME = {
+  white: {
+    p: "",
+    bodyMain: ["#F7F3EC", "#F0ECE4", "#E8E3DA", "#E0DBD0"],
+    bodyFace: ["#EFEBE3", "#E5E0D6"],
+    bodyLeft: ["#E8E3DA", "#EDEAE2", "#E0DBD0"],
+    bodyTop: ["#E8E3DA", "#F0ECE4"],
+    bodyBack: ["#EBE7DF", "#E2DDD3"],
+    mountArm: ["#E8E3DA", "#DBD6CC"],
+    shellStroke: "#D8D3C8",
+    faceStroke: "#D8D3C8",
+    edgeStroke: "#D5D0C6",
+    highlight: "rgba(255,255,255,0.55)",
+    highlightSub: "rgba(255,255,255,0.5)",
+    highlightFaint: "rgba(255,255,255,0.3)",
+    highlightArm: "rgba(255,255,255,0.12)",
+    camRingOuter: "#CDCAC2",
+    camRingInner: "#BAB6AE",
+    irHousing: "#E8E3DA",
+    irHousingStroke: "#D5D0C6",
+    grilleBg: "#D8D3C8",
+    grilleStroke: "#CCC7BC",
+    grilleDot: "#A8A298",
+    brandText: "#C8C3B8",
+    lineColor: "#D5D0C6",
+    mountBallFill: ["#F0ECE4", "#D8D4CA", "#C8C4BA"],
+    usb: "#CCC7BC",
+    usbInner: "#888",
+    backText: "#CCC7BC",
+    backMount: "#E0DBD0",
+    backMountStroke: "#D5D0C6",
+    backMountInner: "#D5D0C6",
+    backMountInner2: "#CCC7BC",
+    backQr: "#D8D3C8",
+    backQrStroke: "#CCC7BC",
+    backQrText: "#BAB6AE",
+    sideButtons: "#D5D0C6",
+    sideBallFill: "#E0DBD0",
+    sideBallStroke: "#CCC7BC",
+    sideTopMount: "#DBD6CC",
+    sideTopMountStroke: "#CCC7BC",
+  },
+  black: {
+    p: "dk",
+    bodyMain: ["#2C2C30", "#262628", "#1E1E22", "#18181C"],
+    bodyFace: ["#242428", "#1C1C20"],
+    bodyLeft: ["#1E1E22", "#222226", "#18181C"],
+    bodyTop: ["#1E1E22", "#262628"],
+    bodyBack: ["#222226", "#1A1A1E"],
+    mountArm: ["#2A2A2E", "#1E1E22"],
+    shellStroke: "#3A3A40",
+    faceStroke: "#3A3A40",
+    edgeStroke: "#333338",
+    highlight: "rgba(255,255,255,0.08)",
+    highlightSub: "rgba(255,255,255,0.06)",
+    highlightFaint: "rgba(255,255,255,0.04)",
+    highlightArm: "rgba(255,255,255,0.06)",
+    camRingOuter: "#3A3A40",
+    camRingInner: "#333338",
+    irHousing: "#2A2A2E",
+    irHousingStroke: "#3A3A40",
+    grilleBg: "#2A2A2E",
+    grilleStroke: "#333338",
+    grilleDot: "#48484E",
+    brandText: "#555558",
+    lineColor: "#333338",
+    mountBallFill: ["#2A2A2E", "#222226", "#1A1A1E"],
+    usb: "#3A3A40",
+    usbInner: "#555",
+    backText: "#48484E",
+    backMount: "#2A2A2E",
+    backMountStroke: "#3A3A40",
+    backMountInner: "#333338",
+    backMountInner2: "#2A2A2E",
+    backQr: "#2A2A2E",
+    backQrStroke: "#3A3A40",
+    backQrText: "#48484E",
+    sideButtons: "#333338",
+    sideBallFill: "#2A2A2E",
+    sideBallStroke: "#3A3A40",
+    sideTopMount: "#333338",
+    sideTopMountStroke: "#3A3A40",
+  },
+};
+
+function SharedDefs({ t }) {
+  const v = t || THEME.white;
+  const p = v.p;
   return (
     <defs>
-      <linearGradient id="bodyMain" x1="0" y1="0" x2="0" y2="1">
-        <stop offset="0%" stopColor="#F7F3EC" />
-        <stop offset="12%" stopColor="#F0ECE4" />
-        <stop offset="75%" stopColor="#E8E3DA" />
-        <stop offset="100%" stopColor="#E0DBD0" />
+      <linearGradient id={p+"bodyMain"} x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stopColor={v.bodyMain[0]} />
+        <stop offset="12%" stopColor={v.bodyMain[1]} />
+        <stop offset="75%" stopColor={v.bodyMain[2]} />
+        <stop offset="100%" stopColor={v.bodyMain[3]} />
       </linearGradient>
-      <linearGradient id="bodyFace" x1="0" y1="0" x2="0.05" y2="1">
-        <stop offset="0%" stopColor="#EFEBE3" />
-        <stop offset="100%" stopColor="#E5E0D6" />
+      <linearGradient id={p+"bodyFace"} x1="0" y1="0" x2="0.05" y2="1">
+        <stop offset="0%" stopColor={v.bodyFace[0]} />
+        <stop offset="100%" stopColor={v.bodyFace[1]} />
       </linearGradient>
-      <linearGradient id="bodyLeft" x1="1" y1="0" x2="0" y2="0.1">
-        <stop offset="0%" stopColor="#E8E3DA" />
-        <stop offset="50%" stopColor="#EDEAE2" />
-        <stop offset="100%" stopColor="#E0DBD0" />
+      <linearGradient id={p+"bodyLeft"} x1="1" y1="0" x2="0" y2="0.1">
+        <stop offset="0%" stopColor={v.bodyLeft[0]} />
+        <stop offset="50%" stopColor={v.bodyLeft[1]} />
+        <stop offset="100%" stopColor={v.bodyLeft[2]} />
       </linearGradient>
-      <linearGradient id="bodyTop" x1="0" y1="1" x2="0" y2="0">
-        <stop offset="0%" stopColor="#E8E3DA" />
-        <stop offset="100%" stopColor="#F0ECE4" />
+      <linearGradient id={p+"bodyTop"} x1="0" y1="1" x2="0" y2="0">
+        <stop offset="0%" stopColor={v.bodyTop[0]} />
+        <stop offset="100%" stopColor={v.bodyTop[1]} />
       </linearGradient>
-      <linearGradient id="bodyBack" x1="0" y1="0" x2="0" y2="1">
-        <stop offset="0%" stopColor="#EBE7DF" />
-        <stop offset="100%" stopColor="#E2DDD3" />
+      <linearGradient id={p+"bodyBack"} x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stopColor={v.bodyBack[0]} />
+        <stop offset="100%" stopColor={v.bodyBack[1]} />
       </linearGradient>
-      <radialGradient id="lensBarrel" cx="48%" cy="42%" r="52%">
+      <radialGradient id={p+"lensBarrel"} cx="48%" cy="42%" r="52%">
         <stop offset="0%" stopColor="#38363E" />
         <stop offset="50%" stopColor="#1E1C24" />
         <stop offset="100%" stopColor="#0E0C14" />
       </radialGradient>
-      <radialGradient id="lensGlass" cx="36%" cy="30%" r="56%">
+      <radialGradient id={p+"lensGlass"} cx="36%" cy="30%" r="56%">
         <stop offset="0%" stopColor="#201548" />
         <stop offset="40%" stopColor="#0C0824" />
         <stop offset="100%" stopColor="#06041A" />
       </radialGradient>
-      <radialGradient id="lensFlare" cx="32%" cy="28%" r="44%">
+      <radialGradient id={p+"lensFlare"} cx="32%" cy="28%" r="44%">
         <stop offset="0%" stopColor="rgba(200,210,255,0.38)" />
         <stop offset="100%" stopColor="rgba(0,0,0,0)" />
       </radialGradient>
-      <radialGradient id="irLed" cx="50%" cy="38%" r="55%">
+      <radialGradient id={p+"irLed"} cx="50%" cy="38%" r="55%">
         <stop offset="0%" stopColor="#481828" />
         <stop offset="100%" stopColor="#2C1018" />
       </radialGradient>
-      <linearGradient id="ledBar" x1="0" y1="0" x2="1" y2="0">
+      <linearGradient id={p+"ledBar"} x1="0" y1="0" x2="1" y2="0">
         <stop offset="0%" stopColor="rgba(0,180,216,0.1)" />
         <stop offset="20%" stopColor="#00B8D8" />
         <stop offset="80%" stopColor="#00B8D8" />
         <stop offset="100%" stopColor="rgba(0,180,216,0.1)" />
       </linearGradient>
-      <linearGradient id="mountArm" x1="0" y1="0" x2="0" y2="1">
-        <stop offset="0%" stopColor="#E8E3DA" />
-        <stop offset="100%" stopColor="#DBD6CC" />
+      <linearGradient id={p+"mountArm"} x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stopColor={v.mountArm[0]} />
+        <stop offset="100%" stopColor={v.mountArm[1]} />
       </linearGradient>
       <filter id="bodyShadow">
         <feDropShadow dx="0" dy="8" stdDeviation="16" floodColor="#000" floodOpacity="0.18" />
@@ -115,7 +203,7 @@ function SharedDefs() {
   );
 }
 
-function GrilleDots({ cx, cy, w, h, dotR = 1.35, spacing = 4.8 }) {
+function GrilleDots({ cx, cy, w, h, dotR = 1.35, spacing = 4.8, color = "#A8A298" }) {
   const dots = [];
   const cols = Math.floor((w - 10) / spacing);
   const rows = Math.floor((h - 10) / (spacing * 0.87));
@@ -129,13 +217,15 @@ function GrilleDots({ cx, cy, w, h, dotR = 1.35, spacing = 4.8 }) {
       if (dx * dx + dy * dy > 0.85) continue;
       if (x < cx - w / 2 + 4 || x > cx + w / 2 - 4) continue;
       if (y < cy - h / 2 + 4 || y > cy + h / 2 - 4) continue;
-      dots.push(<circle key={`${row}-${col}`} cx={x} cy={y} r={dotR} fill="#A8A298" />);
+      dots.push(<circle key={`${row}-${col}`} cx={x} cy={y} r={dotR} fill={color} />);
     }
   }
   return <>{dots}</>;
 }
 
-function HeroFront() {
+function HeroFront({ t }) {
+  const v = t || THEME.white;
+  const p = v.p;
   const W = 600, H = 420;
   const bw = 280, bh = 168;
   const ox = (W - bw) / 2, oy = 125;
@@ -147,22 +237,22 @@ function HeroFront() {
 
   return (
     <svg viewBox={`0 0 ${W} ${H}`} width="100%" style={{ display: "block", maxWidth: 700 }}>
-      <SharedDefs />
+      <SharedDefs t={v} />
       <rect x={ox} y={oy} width={bw} height={bh} rx={R}
-        fill="url(#bodyMain)" filter="url(#bodyShadow)" />
+        fill={`url(#${p}bodyMain)`} filter="url(#bodyShadow)" />
       <rect x={ox + R} y={oy + 0.5} width={bw - R * 2} height={1} rx={0.5}
-        fill="rgba(255,255,255,0.55)" />
+        fill={v.highlight} />
       <rect x={ox + 7} y={oy + 6} width={bw - 14} height={bh - 12} rx={R - 5}
-        fill="url(#bodyFace)" stroke="#D8D3C8" strokeWidth="0.3" filter="url(#inset)" />
+        fill={`url(#${p}bodyFace)`} stroke={v.faceStroke} strokeWidth="0.3" filter="url(#inset)" />
       <line x1={ox + 6} y1={oy + bh * 0.56} x2={ox + bw - 6} y2={oy + bh * 0.56}
-        stroke="#D5D0C6" strokeWidth="0.4" />
+        stroke={v.lineColor} strokeWidth="0.4" />
 
-      <circle cx={camX} cy={camY} r={camR + 3.5} fill="none" stroke="#CDCAC2" strokeWidth="3.5" />
-      <circle cx={camX} cy={camY} r={camR + 1.5} fill="none" stroke="#BAB6AE" strokeWidth="0.6" />
-      <circle cx={camX} cy={camY} r={camR} fill="url(#lensBarrel)" />
+      <circle cx={camX} cy={camY} r={camR + 3.5} fill="none" stroke={v.camRingOuter} strokeWidth="3.5" />
+      <circle cx={camX} cy={camY} r={camR + 1.5} fill="none" stroke={v.camRingInner} strokeWidth="0.6" />
+      <circle cx={camX} cy={camY} r={camR} fill={`url(#${p}lensBarrel)`} />
       <circle cx={camX} cy={camY} r={camR * 0.7} fill="none" stroke="#505058" strokeWidth="1" />
-      <circle cx={camX} cy={camY} r={camR * 0.66} fill="url(#lensGlass)" />
-      <circle cx={camX} cy={camY} r={camR * 0.66} fill="url(#lensFlare)" />
+      <circle cx={camX} cy={camY} r={camR * 0.66} fill={`url(#${p}lensGlass)`} />
+      <circle cx={camX} cy={camY} r={camR * 0.66} fill={`url(#${p}lensFlare)`} />
       <circle cx={camX} cy={camY} r={camR * 0.3} fill="#06041A" stroke="#28263A" strokeWidth="0.4" />
       <circle cx={camX - 6} cy={camY - 5} r={2.5} fill="rgba(220,228,255,0.32)" />
       <circle cx={camX + 9} cy={camY + 7} r={1.5} fill="rgba(180,190,235,0.14)" />
@@ -171,21 +261,21 @@ function HeroFront() {
         [camX - camR - 17, camY + 20], [camX + camR + 17, camY + 20]
       ].map(([x, y], i) => (
         <g key={i}>
-          <circle cx={x} cy={y} r={7} fill="#E8E3DA" stroke="#D5D0C6" strokeWidth="0.5" />
-          <circle cx={x} cy={y} r={5.5} fill="url(#irLed)" />
+          <circle cx={x} cy={y} r={7} fill={v.irHousing} stroke={v.irHousingStroke} strokeWidth="0.5" />
+          <circle cx={x} cy={y} r={5.5} fill={`url(#${p}irLed)`} />
           <circle cx={x} cy={y} r={2.5} fill="#380E18" />
         </g>
       ))}
 
       <rect x={spkX - spkW / 2} y={spkY - spkH / 2} width={spkW} height={spkH} rx={10}
-        fill="#D8D3C8" stroke="#CCC7BC" strokeWidth="0.4" filter="url(#inset)" />
-      <GrilleDots cx={spkX} cy={spkY} w={spkW} h={spkH} dotR={1.4} spacing={5} />
+        fill={v.grilleBg} stroke={v.grilleStroke} strokeWidth="0.4" filter="url(#inset)" />
+      <GrilleDots cx={spkX} cy={spkY} w={spkW} h={spkH} dotR={1.4} spacing={5} color={v.grilleDot} />
 
-      <rect x={ox + bw * 0.24} y={oy + bh - 22} width={bw * 0.52} height={2.4} rx={1.2} fill="url(#ledBar)" />
+      <rect x={ox + bw * 0.24} y={oy + bh - 22} width={bw * 0.52} height={2.4} rx={1.2} fill={`url(#${p}ledBar)`} />
       <rect x={ox + bw * 0.24} y={oy + bh - 22} width={bw * 0.52} height={2.4} rx={1.2}
-        fill="url(#ledBar)" opacity="0.3" filter="url(#ledGlow)" />
+        fill={`url(#${p}ledBar)`} opacity="0.3" filter="url(#ledGlow)" />
 
-      <text x={ox + bw / 2} y={oy + bh - 11} fill="#C8C3B8" fontSize="6"
+      <text x={ox + bw / 2} y={oy + bh - 11} fill={v.brandText} fontSize="6"
         fontFamily="'SF Pro Display', -apple-system, system-ui, sans-serif"
         fontWeight="600" letterSpacing="3.8" textAnchor="middle">ATTENTIA</text>
 
@@ -224,7 +314,9 @@ function HeroFront() {
   );
 }
 
-function FrontClean({ s = 1 }) {
+function FrontClean({ s = 1, t }) {
+  const v = t || THEME.white;
+  const p = v.p;
   const bw = 200 * s, bh = 120 * s, pad = 20 * s;
   const W = bw + pad * 2, H = bh + pad * 2;
   const ox = pad, oy = pad, R = 14 * s;
@@ -234,112 +326,120 @@ function FrontClean({ s = 1 }) {
 
   return (
     <svg viewBox={`0 0 ${W} ${H}`} width="100%" style={{ display: "block", maxWidth: 500 }}>
-      <SharedDefs />
-      <rect x={ox} y={oy} width={bw} height={bh} rx={R} fill="url(#bodyMain)" filter="url(#softShadow)" />
-      <rect x={ox + R} y={oy + 0.5} width={bw - R * 2} height={0.8} rx={0.4} fill="rgba(255,255,255,0.5)" />
+      <SharedDefs t={v} />
+      <rect x={ox} y={oy} width={bw} height={bh} rx={R} fill={`url(#${p}bodyMain)`} filter="url(#softShadow)" />
+      <rect x={ox + R} y={oy + 0.5} width={bw - R * 2} height={0.8} rx={0.4} fill={v.highlightSub} />
       <rect x={ox + 5 * s} y={oy + 4 * s} width={bw - 10 * s} height={bh - 8 * s} rx={R - 4}
-        fill="url(#bodyFace)" stroke="#D8D3C8" strokeWidth="0.3" filter="url(#inset)" />
-      <line x1={ox + 5 * s} y1={oy + bh * 0.56} x2={ox + bw - 5 * s} y2={oy + bh * 0.56} stroke="#D5D0C6" strokeWidth="0.35" />
-      <circle cx={camX} cy={camY} r={camR + 2.5} fill="none" stroke="#CDCAC2" strokeWidth={2.5 * s} />
-      <circle cx={camX} cy={camY} r={camR} fill="url(#lensBarrel)" />
+        fill={`url(#${p}bodyFace)`} stroke={v.faceStroke} strokeWidth="0.3" filter="url(#inset)" />
+      <line x1={ox + 5 * s} y1={oy + bh * 0.56} x2={ox + bw - 5 * s} y2={oy + bh * 0.56} stroke={v.lineColor} strokeWidth="0.35" />
+      <circle cx={camX} cy={camY} r={camR + 2.5} fill="none" stroke={v.camRingOuter} strokeWidth={2.5 * s} />
+      <circle cx={camX} cy={camY} r={camR} fill={`url(#${p}lensBarrel)`} />
       <circle cx={camX} cy={camY} r={camR * 0.7} fill="none" stroke="#505058" strokeWidth={0.8 * s} />
-      <circle cx={camX} cy={camY} r={camR * 0.66} fill="url(#lensGlass)" />
-      <circle cx={camX} cy={camY} r={camR * 0.66} fill="url(#lensFlare)" />
+      <circle cx={camX} cy={camY} r={camR * 0.66} fill={`url(#${p}lensGlass)`} />
+      <circle cx={camX} cy={camY} r={camR * 0.66} fill={`url(#${p}lensFlare)`} />
       <circle cx={camX} cy={camY} r={camR * 0.3} fill="#06041A" stroke="#28263A" strokeWidth="0.3" />
       <circle cx={camX - 4 * s} cy={camY - 3 * s} r={1.8 * s} fill="rgba(220,228,255,0.3)" />
       {[[camX - camR - 12 * s, camY - 14 * s], [camX + camR + 12 * s, camY - 14 * s],
         [camX - camR - 12 * s, camY + 14 * s], [camX + camR + 12 * s, camY + 14 * s]
       ].map(([x, y], i) => (
         <g key={i}>
-          <circle cx={x} cy={y} r={5 * s} fill="#E8E3DA" stroke="#D5D0C6" strokeWidth="0.4" />
-          <circle cx={x} cy={y} r={4 * s} fill="url(#irLed)" />
+          <circle cx={x} cy={y} r={5 * s} fill={v.irHousing} stroke={v.irHousingStroke} strokeWidth="0.4" />
+          <circle cx={x} cy={y} r={4 * s} fill={`url(#${p}irLed)`} />
           <circle cx={x} cy={y} r={1.8 * s} fill="#380E18" />
         </g>
       ))}
       <rect x={spkX - spkW / 2} y={spkY - spkH / 2} width={spkW} height={spkH} rx={8 * s}
-        fill="#D8D3C8" stroke="#CCC7BC" strokeWidth="0.3" filter="url(#inset)" />
-      <GrilleDots cx={spkX} cy={spkY} w={spkW} h={spkH} dotR={1.1 * s} spacing={4 * s} />
-      <rect x={ox + bw * 0.24} y={oy + bh - 16 * s} width={bw * 0.52} height={1.8 * s} rx={0.9 * s} fill="url(#ledBar)" />
+        fill={v.grilleBg} stroke={v.grilleStroke} strokeWidth="0.3" filter="url(#inset)" />
+      <GrilleDots cx={spkX} cy={spkY} w={spkW} h={spkH} dotR={1.1 * s} spacing={4 * s} color={v.grilleDot} />
+      <rect x={ox + bw * 0.24} y={oy + bh - 16 * s} width={bw * 0.52} height={1.8 * s} rx={0.9 * s} fill={`url(#${p}ledBar)`} />
       <rect x={ox + bw * 0.24} y={oy + bh - 16 * s} width={bw * 0.52} height={1.8 * s} rx={0.9 * s}
-        fill="url(#ledBar)" opacity="0.25" filter="url(#ledGlowSmall)" />
-      <text x={ox + bw / 2} y={oy + bh - 8 * s} fill="#C8C3B8" fontSize={4.5 * s}
+        fill={`url(#${p}ledBar)`} opacity="0.25" filter="url(#ledGlowSmall)" />
+      <text x={ox + bw / 2} y={oy + bh - 8 * s} fill={v.brandText} fontSize={4.5 * s}
         fontFamily="'SF Pro Display', sans-serif" fontWeight="600" letterSpacing={3 * s} textAnchor="middle">ATTENTIA</text>
     </svg>
   );
 }
 
-function SideClean({ s = 1 }) {
+function SideClean({ s = 1, t }) {
+  const v = t || THEME.white;
+  const p = v.p;
   const bw = 40 * s, bh = 95 * s, pad = 30 * s;
   const W = bw + pad * 3, H = bh + pad * 4;
   const ox = pad * 1.5, oy = pad * 2.5;
   return (
     <svg viewBox={`0 0 ${W} ${H}`} width="100%" style={{ display: "block", maxWidth: 200 }}>
-      <SharedDefs />
-      <ellipse cx={ox + bw / 2} cy={oy - bh * 0.48} rx={16 * s} ry={4 * s} fill="#DBD6CC" stroke="#CCC7BC" strokeWidth="0.4" />
+      <SharedDefs t={v} />
+      <ellipse cx={ox + bw / 2} cy={oy - bh * 0.48} rx={16 * s} ry={4 * s} fill={v.sideTopMount} stroke={v.sideTopMountStroke} strokeWidth="0.4" />
       <path d={`M${ox + bw / 2},${oy - bh * 0.44} C${ox + bw / 2 - 1},${oy - bh * 0.25} ${ox + bw / 2 + 3},${oy - bh * 0.08} ${ox + bw / 2 + 1},${oy - 2}`}
-        stroke="url(#mountArm)" strokeWidth={7 * s} fill="none" strokeLinecap="round" />
+        stroke={`url(#${p}mountArm)`} strokeWidth={7 * s} fill="none" strokeLinecap="round" />
       <path d={`M${ox + bw / 2 + 1},${oy - bh * 0.42} C${ox + bw / 2},${oy - bh * 0.25} ${ox + bw / 2 + 4},${oy - bh * 0.08} ${ox + bw / 2 + 2},${oy - 2}`}
-        stroke="rgba(255,255,255,0.12)" strokeWidth={1.5} fill="none" strokeLinecap="round" />
-      <circle cx={ox + bw / 2 + 1} cy={oy} r={6 * s} fill="#E0DBD0" stroke="#CCC7BC" strokeWidth="0.4" />
-      <rect x={ox} y={oy + 4} width={bw} height={bh} rx={8 * s} fill="url(#bodyLeft)" filter="url(#softShadow)" />
-      <line x1={ox + 8 * s} y1={oy + 4.6} x2={ox + bw - 8 * s} y2={oy + 4.6} stroke="rgba(255,255,255,0.3)" strokeWidth="0.4" />
-      <line x1={ox + bw - 0.5} y1={oy + 10} x2={ox + bw - 0.5} y2={oy + bh - 6} stroke="#D5D0C6" strokeWidth="0.6" />
-      <line x1={ox + 3} y1={oy + 4 + bh * 0.56} x2={ox + bw - 3} y2={oy + 4 + bh * 0.56} stroke="#D5D0C6" strokeWidth="0.3" />
-      <ellipse cx={ox + bw + 0.5} cy={oy + 4 + bh * 0.34} rx={2} ry={7 * s} fill="#1E1C24" stroke="#BAB6AE" strokeWidth="0.5" />
+        stroke={v.highlightArm} strokeWidth={1.5} fill="none" strokeLinecap="round" />
+      <circle cx={ox + bw / 2 + 1} cy={oy} r={6 * s} fill={v.sideBallFill} stroke={v.sideBallStroke} strokeWidth="0.4" />
+      <rect x={ox} y={oy + 4} width={bw} height={bh} rx={8 * s} fill={`url(#${p}bodyLeft)`} filter="url(#softShadow)" />
+      <line x1={ox + 8 * s} y1={oy + 4.6} x2={ox + bw - 8 * s} y2={oy + 4.6} stroke={v.highlightFaint} strokeWidth="0.4" />
+      <line x1={ox + bw - 0.5} y1={oy + 10} x2={ox + bw - 0.5} y2={oy + bh - 6} stroke={v.lineColor} strokeWidth="0.6" />
+      <line x1={ox + 3} y1={oy + 4 + bh * 0.56} x2={ox + bw - 3} y2={oy + 4 + bh * 0.56} stroke={v.lineColor} strokeWidth="0.3" />
+      <ellipse cx={ox + bw + 0.5} cy={oy + 4 + bh * 0.34} rx={2} ry={7 * s} fill="#1E1C24" stroke={v.camRingInner} strokeWidth="0.5" />
       {[...Array(4)].map((_, i) => (
-        <rect key={i} x={ox + 1} y={oy + 4 + bh * 0.28 + i * 5 * s} width={1.5} height={2.5 * s} rx={0.75} fill="#D5D0C6" />
+        <rect key={i} x={ox + 1} y={oy + 4 + bh * 0.28 + i * 5 * s} width={1.5} height={2.5 * s} rx={0.75} fill={v.sideButtons} />
       ))}
-      <rect x={ox + bw / 2 - 6 * s} y={oy + 4 + bh} width={12 * s} height={3.5 * s} rx={1.5} fill="#CCC7BC" stroke="#BAB6AE" strokeWidth="0.3" />
-      <rect x={ox + bw / 2 - 4 * s} y={oy + 4 + bh + 0.5} width={8 * s} height={2 * s} rx={1} fill="#888" />
+      <rect x={ox + bw / 2 - 6 * s} y={oy + 4 + bh} width={12 * s} height={3.5 * s} rx={1.5} fill={v.usb} stroke={v.camRingInner} strokeWidth="0.3" />
+      <rect x={ox + bw / 2 - 4 * s} y={oy + 4 + bh + 0.5} width={8 * s} height={2 * s} rx={1} fill={v.usbInner} />
       <path d={`M${ox + bw / 2},${oy + 4 + bh + 4 * s} C${ox + bw / 2},${oy + bh + 20 * s} ${ox + bw / 2 - 10 * s},${oy + bh + 35 * s} ${ox + bw / 2 - 16 * s},${oy + bh + 48 * s}`}
         stroke="#777" strokeWidth={3} fill="none" strokeLinecap="round" />
     </svg>
   );
 }
 
-function TopClean({ s = 1 }) {
+function TopClean({ s = 1, t }) {
+  const v = t || THEME.white;
+  const p = v.p;
   const bw = 200 * s, bh = 42 * s, pad = 16 * s;
   const W = bw + pad * 2, H = bh + pad * 2;
   return (
     <svg viewBox={`0 0 ${W} ${H}`} width="100%" style={{ display: "block", maxWidth: 500 }}>
-      <SharedDefs />
-      <rect x={pad} y={pad} width={bw} height={bh} rx={8 * s} fill="url(#bodyTop)" stroke="#D8D3C8" strokeWidth="0.35" />
-      <rect x={pad + 8 * s} y={pad + 0.5} width={bw - 16 * s} height={0.6} rx={0.3} fill="rgba(255,255,255,0.3)" />
-      <circle cx={pad + bw / 2} cy={pad + 3 * s} r={8 * s} fill="#E0DBD0" stroke="#D5D0C6" strokeWidth="0.4" />
-      <circle cx={pad + bw / 2} cy={pad + 3 * s} r={4.5 * s} fill="#D5D0C6" />
+      <SharedDefs t={v} />
+      <rect x={pad} y={pad} width={bw} height={bh} rx={8 * s} fill={`url(#${p}bodyTop)`} stroke={v.shellStroke} strokeWidth="0.35" />
+      <rect x={pad + 8 * s} y={pad + 0.5} width={bw - 16 * s} height={0.6} rx={0.3} fill={v.highlightFaint} />
+      <circle cx={pad + bw / 2} cy={pad + 3 * s} r={8 * s} fill={v.backMount} stroke={v.lineColor} strokeWidth="0.4" />
+      <circle cx={pad + bw / 2} cy={pad + 3 * s} r={4.5 * s} fill={v.lineColor} />
     </svg>
   );
 }
 
-function BackClean({ s = 1 }) {
+function BackClean({ s = 1, t }) {
+  const v = t || THEME.white;
+  const p = v.p;
   const bw = 200 * s, bh = 120 * s, pad = 16 * s;
   const W = bw + pad * 2, H = bh + pad * 2;
   const ox = pad, oy = pad;
   return (
     <svg viewBox={`0 0 ${W} ${H}`} width="100%" style={{ display: "block", maxWidth: 500 }}>
-      <SharedDefs />
-      <rect x={ox} y={oy} width={bw} height={bh} rx={14 * s} fill="url(#bodyBack)" stroke="#D8D3C8" strokeWidth="0.35" />
-      <rect x={ox + bw / 2 - 12 * s} y={oy + 12 * s} width={24 * s} height={18 * s} rx={5 * s} fill="#E0DBD0" stroke="#D5D0C6" strokeWidth="0.4" />
-      <circle cx={ox + bw / 2} cy={oy + 21 * s} r={5 * s} fill="#D5D0C6" />
-      <circle cx={ox + bw / 2} cy={oy + 21 * s} r={2.5 * s} fill="#CCC7BC" />
+      <SharedDefs t={v} />
+      <rect x={ox} y={oy} width={bw} height={bh} rx={14 * s} fill={`url(#${p}bodyBack)`} stroke={v.shellStroke} strokeWidth="0.35" />
+      <rect x={ox + bw / 2 - 12 * s} y={oy + 12 * s} width={24 * s} height={18 * s} rx={5 * s} fill={v.backMount} stroke={v.backMountStroke} strokeWidth="0.4" />
+      <circle cx={ox + bw / 2} cy={oy + 21 * s} r={5 * s} fill={v.backMountInner} />
+      <circle cx={ox + bw / 2} cy={oy + 21 * s} r={2.5 * s} fill={v.backMountInner2} />
       {[
         [0.48, "ATTENTIA DM-1 · FCC ID: 2A4XX-DM1", 4.5],
         [0.55, "5V ⎓ 3A · Input: 15W Max", 4],
         [0.61, "Model: ATT-DM1-001", 4],
         [0.67, "Designed in USA · Made in China", 3.8],
       ].map(([yp, text, sz], i) => (
-        <text key={i} x={ox + bw / 2} y={oy + bh * yp} textAnchor="middle" fill="#CCC7BC"
+        <text key={i} x={ox + bw / 2} y={oy + bh * yp} textAnchor="middle" fill={v.backText}
           fontSize={sz * s} fontFamily="'SF Mono', monospace">{text}</text>
       ))}
       <rect x={ox + bw / 2 - 10 * s} y={oy + bh * 0.72} width={20 * s} height={20 * s} rx={2}
-        fill="#D8D3C8" stroke="#CCC7BC" strokeWidth="0.3" />
+        fill={v.backQr} stroke={v.backQrStroke} strokeWidth="0.3" />
       <text x={ox + bw / 2} y={oy + bh * 0.72 + 11 * s} textAnchor="middle"
-        fill="#BAB6AE" fontSize={3.5 * s} fontFamily="monospace">QR</text>
+        fill={v.backQrText} fontSize={3.5 * s} fontFamily="monospace">QR</text>
     </svg>
   );
 }
 
-function MountDevice({ x, y, scale = 1 }) {
+function MountDevice({ x, y, scale = 1, t }) {
+  const v = t || THEME.white;
+  const p = v.p;
   const w = 98 * scale, h = 60 * scale;
   const ox = x - w / 2, oy = y - h / 2;
   const camX = ox + w * 0.26, camY = oy + h * 0.46;
@@ -350,53 +450,53 @@ function MountDevice({ x, y, scale = 1 }) {
   return (
     <g>
       <rect x={ox} y={oy} width={w} height={h} rx={10 * scale}
-        fill="url(#bodyMain)" filter="url(#softShadow)" />
+        fill={`url(#${p}bodyMain)`} filter="url(#softShadow)" />
       <rect x={ox + 10 * scale} y={oy + 0.5} width={w - 20 * scale} height={0.8 * scale} rx={0.4}
-        fill="rgba(255,255,255,0.5)" />
+        fill={v.highlightSub} />
       <rect x={ox + 4 * scale} y={oy + 3 * scale} width={w - 8 * scale} height={h - 6 * scale} rx={7 * scale}
-        fill="url(#bodyFace)" stroke="#D8D3C8" strokeWidth="0.3" filter="url(#inset)" />
+        fill={`url(#${p}bodyFace)`} stroke={v.faceStroke} strokeWidth="0.3" filter="url(#inset)" />
       <line x1={ox + 4 * scale} y1={oy + h * 0.56} x2={ox + w - 4 * scale} y2={oy + h * 0.56}
-        stroke="#D5D0C6" strokeWidth="0.3" />
-      <circle cx={camX} cy={camY} r={camR + 2} fill="none" stroke="#CDCAC2" strokeWidth={2 * scale} />
-      <circle cx={camX} cy={camY} r={camR} fill="url(#lensBarrel)" />
-      <circle cx={camX} cy={camY} r={camR * 0.68} fill="url(#lensGlass)" />
-      <circle cx={camX} cy={camY} r={camR * 0.68} fill="url(#lensFlare)" />
+        stroke={v.lineColor} strokeWidth="0.3" />
+      <circle cx={camX} cy={camY} r={camR + 2} fill="none" stroke={v.camRingOuter} strokeWidth={2 * scale} />
+      <circle cx={camX} cy={camY} r={camR} fill={`url(#${p}lensBarrel)`} />
+      <circle cx={camX} cy={camY} r={camR * 0.68} fill={`url(#${p}lensGlass)`} />
+      <circle cx={camX} cy={camY} r={camR * 0.68} fill={`url(#${p}lensFlare)`} />
       <circle cx={camX} cy={camY} r={camR * 0.3} fill="#06041A" />
       <circle cx={camX - 3 * scale} cy={camY - 2 * scale} r={1.5 * scale} fill="rgba(220,228,255,0.28)" />
       {[[camX - camR - 8 * scale, camY - 10 * scale], [camX + camR + 8 * scale, camY - 10 * scale],
         [camX - camR - 8 * scale, camY + 10 * scale], [camX + camR + 8 * scale, camY + 10 * scale]
       ].map(([lx, ly], i) => (
         <g key={i}>
-          <circle cx={lx} cy={ly} r={4 * scale} fill="#E8E3DA" stroke="#D5D0C6" strokeWidth="0.3" />
-          <circle cx={lx} cy={ly} r={3 * scale} fill="url(#irLed)" />
+          <circle cx={lx} cy={ly} r={4 * scale} fill={v.irHousing} stroke={v.irHousingStroke} strokeWidth="0.3" />
+          <circle cx={lx} cy={ly} r={3 * scale} fill={`url(#${p}irLed)`} />
           <circle cx={lx} cy={ly} r={1.3 * scale} fill="#380E18" />
         </g>
       ))}
       <rect x={spkX - spkW / 2} y={spkY - spkH / 2} width={spkW} height={spkH} rx={5 * scale}
-        fill="#D8D3C8" stroke="#CCC7BC" strokeWidth="0.3" filter="url(#inset)" />
+        fill={v.grilleBg} stroke={v.grilleStroke} strokeWidth="0.3" filter="url(#inset)" />
       {[...Array(3)].map((_, r) =>
         [...Array(4)].map((_, c) => (
           <circle key={`${r}-${c}`} cx={spkX - 8 * scale + c * 5.5 * scale} cy={spkY - 5 * scale + r * 5 * scale}
-            r={1 * scale} fill="#A8A298" />
+            r={1 * scale} fill={v.grilleDot} />
         ))
       )}
       <rect x={ox + w * 0.24} y={oy + h - 10 * scale} width={w * 0.52} height={1.6 * scale} rx={0.8 * scale}
-        fill="url(#ledBar)" />
+        fill={`url(#${p}ledBar)`} />
       <rect x={ox + w * 0.24} y={oy + h - 10 * scale} width={w * 0.52} height={1.6 * scale} rx={0.8 * scale}
-        fill="url(#ledBar)" opacity="0.25" filter="url(#ledGlowSmall)" />
-      <text x={x} y={oy + h - 4 * scale} fill="#C8C3B8" fontSize={4 * scale}
+        fill={`url(#${p}ledBar)`} opacity="0.25" filter="url(#ledGlowSmall)" />
+      <text x={x} y={oy + h - 4 * scale} fill={v.brandText} fontSize={4 * scale}
         fontFamily="'SF Pro Display', sans-serif" fontWeight="600" letterSpacing={2 * scale} textAnchor="middle">ATTENTIA</text>
     </g>
   );
 }
 
-function WindshieldMount() {
+function WindshieldMount({ t }) {
   const W = 280, H = 340;
   const mid = W / 2;
 
   return (
     <svg viewBox={`0 0 ${W} ${H}`} width="100%" style={{ display: "block", maxWidth: 400 }}>
-      <SharedDefs />
+      <SharedDefs t={t} />
       <defs>
         <linearGradient id="windshieldGlass" x1="0" y1="0" x2="0" y2="1">
           <stop offset="0%" stopColor="#1E3040" />
@@ -451,7 +551,7 @@ function WindshieldMount() {
       <rect x={mid - 5} y={194} width={10} height={4} rx={1} fill="#C8C4BA" />
 
       <g transform={`translate(${mid}, 242)`}>
-        <MountDevice x={0} y={0} scale={0.85} />
+        <MountDevice x={0} y={0} scale={0.85} t={t} />
       </g>
 
       <rect x={mid - 4} y={284} width={8} height={4} rx={1.5} fill="#888" stroke="#666" strokeWidth="0.3" />
@@ -463,13 +563,13 @@ function WindshieldMount() {
   );
 }
 
-function MirrorMount() {
+function MirrorMount({ t }) {
   const W = 280, H = 340;
   const mid = W / 2;
 
   return (
     <svg viewBox={`0 0 ${W} ${H}`} width="100%" style={{ display: "block", maxWidth: 400 }}>
-      <SharedDefs />
+      <SharedDefs t={t} />
       <defs>
         <linearGradient id="mirrorHousing" x1="0" y1="0" x2="0" y2="1">
           <stop offset="0%" stopColor="#2A2A2E" />
@@ -540,7 +640,7 @@ function MirrorMount() {
       <rect x={mid - 4} y={164} width={8} height={3} rx={1} fill="#C8C4BA" />
 
       <g transform={`translate(${mid}, 208)`}>
-        <MountDevice x={0} y={0} scale={0.8} />
+        <MountDevice x={0} y={0} scale={0.8} t={t} />
       </g>
 
       <rect x={mid - 3.5} y={246} width={7} height={3.5} rx={1.2} fill="#888" stroke="#666" strokeWidth="0.3" />
@@ -557,23 +657,76 @@ function MirrorMount() {
   );
 }
 
+function ColorToggle({ dark, onToggle }) {
+  return (
+    <div style={{ display: "flex", alignItems: "center", gap: 12, justifyContent: "center" }}>
+      <span style={{
+        fontSize: 11, fontWeight: 600, letterSpacing: "0.1em",
+        color: !dark ? "#00B4D8" : (dark ? "rgba(0,0,0,0.25)" : "#555"),
+        transition: "color 0.4s ease",
+      }}>CREAM</span>
+      <button onClick={onToggle} style={{
+        width: 56, height: 28, borderRadius: 14, border: "none", cursor: "pointer",
+        background: dark ? "#1E1E22" : "#EDE8E0",
+        position: "relative", padding: 0,
+        boxShadow: dark ? "inset 0 1px 3px rgba(0,0,0,0.4), 0 0 12px rgba(0,180,216,0.15)" : "inset 0 1px 3px rgba(0,0,0,0.08), 0 0 12px rgba(0,180,216,0.1)",
+        transition: "background 0.4s ease, box-shadow 0.4s ease",
+      }}>
+        <div style={{
+          width: 22, height: 22, borderRadius: "50%",
+          background: dark ? "linear-gradient(135deg, #00B4D8, #0090AA)" : "linear-gradient(135deg, #00B4D8, #0090AA)",
+          position: "absolute", top: 3,
+          left: dark ? 31 : 3,
+          transition: "left 0.35s cubic-bezier(0.4, 0, 0.2, 1)",
+          boxShadow: "0 2px 6px rgba(0,180,216,0.4)",
+        }} />
+      </button>
+      <span style={{
+        fontSize: 11, fontWeight: 600, letterSpacing: "0.1em",
+        color: dark ? "#00B4D8" : (dark ? "#555" : "rgba(255,255,255,0.2)"),
+        transition: "color 0.4s ease",
+      }}>BLACK</span>
+    </div>
+  );
+}
+
 function AttentiaDesign() {
   const [tab, setTab] = useState("design");
+  const [dark, setDark] = useState(false);
   const ff = "'SF Pro Display', -apple-system, 'Segoe UI', system-ui, sans-serif";
   const accent = "#00B4D8";
 
+  const deviceTheme = dark ? THEME.black : THEME.white;
+
+  /* UI colors that flip with the toggle */
+  const ui = {
+    bg: dark ? "#F0EDE6" : "#08080A",
+    text: dark ? "#2A2A2E" : "#D0D0D4",
+    textMid: dark ? "#555" : "#B0B0B4",
+    textMuted: dark ? "#888" : "#666",
+    textDim: dark ? "#AAA" : "#555",
+    cardBg: dark ? "rgba(0,0,0,0.028)" : "rgba(255,255,255,0.018)",
+    cardBorder: dark ? "rgba(0,0,0,0.06)" : "rgba(255,255,255,0.035)",
+    headerBorder: dark ? "rgba(0,0,0,0.06)" : "rgba(255,255,255,0.04)",
+    rowBorder: dark ? "rgba(0,0,0,0.05)" : "rgba(255,255,255,0.025)",
+    subtleBg: dark ? "rgba(0,0,0,0.015)" : "rgba(255,255,255,0.01)",
+    accentBg: dark ? "rgba(0,180,216,0.04)" : "rgba(0,180,216,0.015)",
+    accentBorder: dark ? "rgba(0,180,216,0.1)" : "rgba(0,180,216,0.06)",
+    featureText: dark ? "#444" : "#C0C0C4",
+  };
+
   const Card = ({ children, style }) => (
-    <div style={{
-      background: "rgba(255,255,255,0.018)", border: "1px solid rgba(255,255,255,0.035)",
+    <div className="att-t" style={{
+      background: ui.cardBg, border: `1px solid ${ui.cardBorder}`,
       borderRadius: 10, ...style,
     }}>{children}</div>
   );
 
   return (
-    <div style={{ width: "100%", minHeight: "100vh", background: "#08080A", fontFamily: ff, color: "#D0D0D4" }}>
-      <header style={{
+    <div className="att-t" style={{ width: "100%", minHeight: "100vh", background: ui.bg, fontFamily: ff, color: ui.text }}>
+      <header className="att-t" style={{
         padding: "14px 28px", display: "flex", alignItems: "center", justifyContent: "space-between",
-        borderBottom: "1px solid rgba(255,255,255,0.04)", position: "sticky", top: 0, background: "#08080A", zIndex: 20,
+        borderBottom: `1px solid ${ui.headerBorder}`, position: "sticky", top: 0, background: ui.bg, zIndex: 20,
       }}>
         <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
           <div style={{
@@ -583,14 +736,16 @@ function AttentiaDesign() {
             fontSize: 13, fontWeight: 700, color: "#fff",
           }}>A</div>
           <span style={{ fontSize: 16, fontWeight: 600, letterSpacing: "0.06em" }}>ATTENTIA</span>
-          <span style={{ fontSize: 12, color: "#555", marginLeft: 4 }}>DM-1 Driver Monitor · Product Design Rev 2</span>
+          <span className="att-t" style={{ fontSize: 12, color: ui.textDim, marginLeft: 4 }}>DM-1 Driver Monitor · Product Design Rev 3</span>
         </div>
-        <div style={{ display: "flex", gap: 2 }}>
+        <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+          <ColorToggle dark={dark} onToggle={() => setDark(!dark)} />
+          <div style={{ width: 1, height: 20, background: ui.headerBorder, margin: "0 6px" }} />
           {["design", "views", "mount", "specs"].map(t => (
             <button key={t} onClick={() => setTab(t)} style={{
               padding: "7px 18px", border: "none", borderRadius: 6, cursor: "pointer",
               background: tab === t ? "rgba(0,180,216,0.08)" : "transparent",
-              color: tab === t ? accent : "#555",
+              color: tab === t ? accent : ui.textDim,
               fontSize: 13, fontWeight: 500, fontFamily: ff, letterSpacing: "0.04em", textTransform: "capitalize",
             }}>{t}</button>
           ))}
@@ -602,26 +757,42 @@ function AttentiaDesign() {
         {tab === "design" && (
           <div>
             <div style={{ textAlign: "center", paddingTop: 28 }}>
-              <div style={{ fontSize: 11, letterSpacing: "0.15em", color: "#555", fontWeight: 500 }}>FRONT VIEW — ANNOTATED</div>
+              <div className="att-t" style={{ fontSize: 11, letterSpacing: "0.15em", color: ui.textDim, fontWeight: 500 }}>FRONT VIEW — ANNOTATED</div>
             </div>
             <div style={{ display: "flex", justifyContent: "center", margin: "8px 0 20px" }}>
-              <HeroFront />
+              <HeroFront t={deviceTheme} />
             </div>
             <Card style={{ padding: "14px 20px", marginBottom: 16, display: "flex", alignItems: "center", gap: 18 }}>
-              <span style={{ fontSize: 11, color: "#777", letterSpacing: "0.08em", fontWeight: 500 }}>SHELL COLOR</span>
+              <span className="att-t" style={{ fontSize: 11, color: ui.textMuted, letterSpacing: "0.08em", fontWeight: 500 }}>SHELL COLOR</span>
               <div style={{ display: "flex", gap: 10, alignItems: "center" }}>
-                <div style={{ width: 32, height: 32, borderRadius: 7, background: "#EDE8E0", border: "2px solid rgba(0,180,216,0.4)" }} />
+                <div className="att-t" style={{
+                  width: 32, height: 32, borderRadius: 7, background: "#EDE8E0",
+                  border: !dark ? `2px solid ${accent}` : `1px solid ${dark ? "rgba(0,0,0,0.12)" : "#444"}`,
+                  transition: "border 0.4s ease",
+                }} />
                 <div>
-                  <div style={{ fontSize: 13, fontWeight: 600, color: "#B0B0B4" }}>Warm Cream</div>
-                  <div style={{ fontSize: 11, color: "#666", fontFamily: "monospace" }}>#EDE8E0 · Pantone Warm Gray 1C</div>
+                  <div className="att-t" style={{ fontSize: 13, fontWeight: 600, color: ui.textMid }}>{dark ? "Warm Cream" : "Warm Cream"}</div>
+                  <div className="att-t" style={{ fontSize: 11, color: ui.textMuted, fontFamily: "monospace" }}>#EDE8E0 · Pantone Warm Gray 1C</div>
                 </div>
               </div>
-              <div style={{ width: 1, height: 24, background: "rgba(255,255,255,0.04)", margin: "0 6px" }} />
+              <div className="att-t" style={{ width: 1, height: 24, background: ui.headerBorder, margin: "0 6px" }} />
               <div style={{ display: "flex", gap: 10, alignItems: "center" }}>
-                <div style={{ width: 32, height: 32, borderRadius: 7, background: "#1E1C24", border: "1px solid #333" }} />
+                <div className="att-t" style={{
+                  width: 32, height: 32, borderRadius: 7, background: "#1E1E22",
+                  border: dark ? `2px solid ${accent}` : `1px solid ${dark ? "rgba(0,0,0,0.12)" : "#333"}`,
+                  transition: "border 0.4s ease",
+                }} />
                 <div>
-                  <div style={{ fontSize: 13, fontWeight: 600, color: "#B0B0B4" }}>Lens / IR</div>
-                  <div style={{ fontSize: 11, color: "#666", fontFamily: "monospace" }}>#1E1C24 · Deep Black</div>
+                  <div className="att-t" style={{ fontSize: 13, fontWeight: 600, color: ui.textMid }}>Stealth Black</div>
+                  <div className="att-t" style={{ fontSize: 11, color: ui.textMuted, fontFamily: "monospace" }}>#1E1E22 · Soft-Touch Matte</div>
+                </div>
+              </div>
+              <div className="att-t" style={{ width: 1, height: 24, background: ui.headerBorder, margin: "0 6px" }} />
+              <div style={{ display: "flex", gap: 10, alignItems: "center" }}>
+                <div style={{ width: 32, height: 32, borderRadius: 7, background: "#1E1C24", border: `1px solid ${dark ? "rgba(0,0,0,0.12)" : "#333"}` }} />
+                <div>
+                  <div className="att-t" style={{ fontSize: 13, fontWeight: 600, color: ui.textMid }}>Lens / IR</div>
+                  <div className="att-t" style={{ fontSize: 11, color: ui.textMuted, fontFamily: "monospace" }}>#1E1C24 · Deep Black</div>
                 </div>
               </div>
             </Card>
@@ -637,9 +808,9 @@ function AttentiaDesign() {
                 <Card key={i} style={{ padding: "16px 18px" }}>
                   <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 6 }}>
                     <span style={{ fontSize: 16, color: f.c, opacity: 0.65 }}>{f.icon}</span>
-                    <span style={{ fontSize: 14, fontWeight: 600, color: "#C0C0C4" }}>{f.t}</span>
+                    <span className="att-t" style={{ fontSize: 14, fontWeight: 600, color: ui.featureText }}>{f.t}</span>
                   </div>
-                  <div style={{ fontSize: 12, color: "#666", lineHeight: 1.6 }}>{f.d}</div>
+                  <div className="att-t" style={{ fontSize: 12, color: ui.textMuted, lineHeight: 1.6 }}>{f.d}</div>
                 </Card>
               ))}
             </div>
@@ -650,31 +821,31 @@ function AttentiaDesign() {
           <div style={{ paddingTop: 24 }}>
             <div style={{ display: "grid", gridTemplateColumns: "1fr 0.6fr", gap: 16 }}>
               <Card style={{ padding: 20, display: "flex", flexDirection: "column", alignItems: "center" }}>
-                <div style={{ fontSize: 11, letterSpacing: "0.12em", color: "#555", fontWeight: 500, marginBottom: 10 }}>FRONT</div>
-                <FrontClean s={1.4} />
+                <div className="att-t" style={{ fontSize: 11, letterSpacing: "0.12em", color: ui.textDim, fontWeight: 500, marginBottom: 10 }}>FRONT</div>
+                <FrontClean s={1.4} t={deviceTheme} />
               </Card>
               <Card style={{ padding: 20, display: "flex", flexDirection: "column", alignItems: "center" }}>
-                <div style={{ fontSize: 11, letterSpacing: "0.12em", color: "#555", fontWeight: 500, marginBottom: 10 }}>RIGHT SIDE</div>
-                <SideClean s={1.15} />
+                <div className="att-t" style={{ fontSize: 11, letterSpacing: "0.12em", color: ui.textDim, fontWeight: 500, marginBottom: 10 }}>RIGHT SIDE</div>
+                <SideClean s={1.15} t={deviceTheme} />
               </Card>
             </div>
             <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16, marginTop: 16 }}>
               <Card style={{ padding: 20, display: "flex", flexDirection: "column", alignItems: "center" }}>
-                <div style={{ fontSize: 11, letterSpacing: "0.12em", color: "#555", fontWeight: 500, marginBottom: 10 }}>TOP</div>
-                <TopClean s={1.4} />
+                <div className="att-t" style={{ fontSize: 11, letterSpacing: "0.12em", color: ui.textDim, fontWeight: 500, marginBottom: 10 }}>TOP</div>
+                <TopClean s={1.4} t={deviceTheme} />
               </Card>
               <Card style={{ padding: 20, display: "flex", flexDirection: "column", alignItems: "center" }}>
-                <div style={{ fontSize: 11, letterSpacing: "0.12em", color: "#555", fontWeight: 500, marginBottom: 10 }}>BACK</div>
-                <BackClean s={1.15} />
+                <div className="att-t" style={{ fontSize: 11, letterSpacing: "0.12em", color: ui.textDim, fontWeight: 500, marginBottom: 10 }}>BACK</div>
+                <BackClean s={1.15} t={deviceTheme} />
               </Card>
             </div>
             <Card style={{
-              marginTop: 16, padding: "16px 24px", background: "rgba(0,180,216,0.015)",
-              border: "1px solid rgba(0,180,216,0.06)", display: "flex", justifyContent: "space-around",
+              marginTop: 16, padding: "16px 24px", background: ui.accentBg,
+              border: `1px solid ${ui.accentBorder}`, display: "flex", justifyContent: "space-around",
             }}>
               {[["Width", "98mm"], ["Height", "58mm"], ["Depth", "32mm"], ["Weight", "89g"], ["Corner R", "8mm"], ["Lens ∅", "18mm"]].map(([l, v], i) => (
                 <div key={i} style={{ textAlign: "center" }}>
-                  <div style={{ fontSize: 10, color: "#555", letterSpacing: "0.08em", marginBottom: 3 }}>{l}</div>
+                  <div className="att-t" style={{ fontSize: 10, color: ui.textDim, letterSpacing: "0.08em", marginBottom: 3 }}>{l}</div>
                   <div style={{ fontSize: 20, fontWeight: 600, color: accent, fontFamily: "'SF Mono', monospace" }}>{v}</div>
                 </div>
               ))}
@@ -689,12 +860,12 @@ function AttentiaDesign() {
                 <div style={{
                   fontSize: 11, letterSpacing: "0.12em", color: accent, fontWeight: 600,
                   marginBottom: 14, textAlign: "center", paddingBottom: 10,
-                  borderBottom: "1px solid rgba(0,180,216,0.08)",
+                  borderBottom: `1px solid ${ui.accentBorder}`,
                 }}>OPTION A · WINDSHIELD MOUNT</div>
                 <div style={{ display: "flex", justifyContent: "center", marginBottom: 14 }}>
-                  <WindshieldMount />
+                  <WindshieldMount t={deviceTheme} />
                 </div>
-                <div style={{ padding: "12px 14px", background: "rgba(255,255,255,0.01)", borderRadius: 6 }}>
+                <div style={{ padding: "12px 14px", background: ui.subtleBg, borderRadius: 6 }}>
                   {[
                     ["Attachment", "3M VHB adhesive disk"],
                     ["Hold Strength", "~2.5 kg shear force"],
@@ -702,9 +873,9 @@ function AttentiaDesign() {
                     ["Adjustment", "±30° tilt · ±45° pan"],
                     ["Best For", "Most vehicles"],
                   ].map(([k, v], i) => (
-                    <div key={i} style={{ display: "flex", justifyContent: "space-between", padding: "5px 0", borderBottom: i < 4 ? "1px solid rgba(255,255,255,0.025)" : "none" }}>
-                      <span style={{ fontSize: 12, color: "#777" }}>{k}</span>
-                      <span style={{ fontSize: 12, color: "#B0B0B4", fontWeight: 500 }}>{v}</span>
+                    <div key={i} style={{ display: "flex", justifyContent: "space-between", padding: "5px 0", borderBottom: i < 4 ? `1px solid ${ui.rowBorder}` : "none" }}>
+                      <span className="att-t" style={{ fontSize: 12, color: ui.textMuted }}>{k}</span>
+                      <span className="att-t" style={{ fontSize: 12, color: ui.textMid, fontWeight: 500 }}>{v}</span>
                     </div>
                   ))}
                 </div>
@@ -717,9 +888,9 @@ function AttentiaDesign() {
                   borderBottom: "1px solid rgba(48,221,112,0.08)",
                 }}>OPTION B · MIRROR MOUNT</div>
                 <div style={{ display: "flex", justifyContent: "center", marginBottom: 14 }}>
-                  <MirrorMount />
+                  <MirrorMount t={deviceTheme} />
                 </div>
-                <div style={{ padding: "12px 14px", background: "rgba(255,255,255,0.01)", borderRadius: 6 }}>
+                <div style={{ padding: "12px 14px", background: ui.subtleBg, borderRadius: 6 }}>
                   {[
                     ["Attachment", "Clamp-on bracket"],
                     ["Hold Strength", "Tool-free secure"],
@@ -727,9 +898,9 @@ function AttentiaDesign() {
                     ["Adjustment", "±30° tilt · ±45° pan"],
                     ["Best For", "Easy install / rentals"],
                   ].map(([k, v], i) => (
-                    <div key={i} style={{ display: "flex", justifyContent: "space-between", padding: "5px 0", borderBottom: i < 4 ? "1px solid rgba(255,255,255,0.025)" : "none" }}>
-                      <span style={{ fontSize: 12, color: "#777" }}>{k}</span>
-                      <span style={{ fontSize: 12, color: "#B0B0B4", fontWeight: 500 }}>{v}</span>
+                    <div key={i} style={{ display: "flex", justifyContent: "space-between", padding: "5px 0", borderBottom: i < 4 ? `1px solid ${ui.rowBorder}` : "none" }}>
+                      <span className="att-t" style={{ fontSize: 12, color: ui.textMuted }}>{k}</span>
+                      <span className="att-t" style={{ fontSize: 12, color: ui.textMid, fontWeight: 500 }}>{v}</span>
                     </div>
                   ))}
                 </div>
@@ -751,20 +922,20 @@ function AttentiaDesign() {
                       display: "flex", alignItems: "center", justifyContent: "center",
                       fontSize: 11, fontWeight: 600, color: s.c,
                     }}>{s.n}</div>
-                    <div style={{ fontSize: 13, fontWeight: 600, color: "#B0B0B4" }}>{s.t}</div>
+                    <div className="att-t" style={{ fontSize: 13, fontWeight: 600, color: ui.textMid }}>{s.t}</div>
                   </div>
-                  <div style={{ fontSize: 11, color: "#666", lineHeight: 1.5 }}>{s.d}</div>
+                  <div className="att-t" style={{ fontSize: 11, color: ui.textMuted, lineHeight: 1.5 }}>{s.d}</div>
                 </Card>
               ))}
             </div>
 
             <Card style={{
               padding: "14px 22px", display: "flex", justifyContent: "space-between", alignItems: "center",
-              background: "rgba(0,180,216,0.015)", border: "1px solid rgba(0,180,216,0.06)",
+              background: ui.accentBg, border: `1px solid ${ui.accentBorder}`,
             }}>
               <div>
                 <div style={{ fontSize: 13, fontWeight: 600, color: "#0090AA", marginBottom: 3 }}>INSTALLATION TIME</div>
-                <div style={{ fontSize: 12, color: "#666" }}>Mount behind rearview mirror, camera facing driver at ~45°. Route USB-C along headliner.</div>
+                <div className="att-t" style={{ fontSize: 12, color: ui.textMuted }}>Mount behind rearview mirror, camera facing driver at ~45°. Route USB-C along headliner.</div>
               </div>
               <div style={{ fontSize: 28, fontWeight: 700, color: accent, fontFamily: "'SF Mono', monospace" }}>&lt;5 min</div>
             </Card>
@@ -775,7 +946,7 @@ function AttentiaDesign() {
           <div style={{ paddingTop: 24 }}>
             <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 14 }}>
               {[
-                { cat: "PHYSICAL", rows: [["Dimensions", "98 × 58 × 32 mm"], ["Weight", "89g (device only)"], ["Shell", "ABS · Warm Cream"], ["Finish", "Matte soft-touch, UV-resistant"], ["Corner Radius", "8mm external"], ["Operating Temp", "-20°C to 65°C"]] },
+                { cat: "PHYSICAL", rows: [["Dimensions", "98 × 58 × 32 mm"], ["Weight", "89g (device only)"], ["Shell", dark ? "ABS · Stealth Black" : "ABS · Warm Cream"], ["Finish", "Matte soft-touch, UV-resistant"], ["Corner Radius", "8mm external"], ["Operating Temp", "-20°C to 65°C"]] },
                 { cat: "OPTICS", rows: [["Sensor", "Sony IMX219PQ 2MP"], ["Lens", "M12 3.6mm f/2.0 IR-corrected"], ["FOV", "77° diagonal"], ["IR LEDs", "4× OSRAM SFH 4726AS"], ["Wavelength", "850nm"], ["Range", "0.3 – 1.2m"]] },
                 { cat: "COMPUTE", rows: [["SoC", "Rockchip RK3568"], ["CPU", "4× Cortex-A55 @ 2.0GHz"], ["NPU", "0.8 TOPS (INT8)"], ["RAM", "4GB LPDDR4X"], ["Storage", "32GB eMMC 5.1"], ["Wireless", "ESP32-C6 WiFi 6 + BLE 5.0"]] },
                 { cat: "AUDIO", rows: [["Speaker", "1W 8Ω micro driver"], ["Microphone", "MEMS ambient calibration"], ["Alert System", "3-stage escalation"], ["Level 1", "Chime · 60dB"], ["Level 2", "Spoken warning · 70dB"], ["Level 3", "Alarm · 80dB"]] },
@@ -784,15 +955,15 @@ function AttentiaDesign() {
                   <div style={{
                     fontSize: 11, letterSpacing: "0.12em", color: "#0090AA",
                     fontWeight: 600, marginBottom: 12, paddingBottom: 6,
-                    borderBottom: "1px solid rgba(0,180,216,0.06)",
+                    borderBottom: `1px solid ${ui.accentBorder}`,
                   }}>{s.cat}</div>
                   {s.rows.map(([k, v], j) => (
                     <div key={j} style={{
                       display: "flex", justifyContent: "space-between", padding: "5px 0",
-                      borderBottom: j < s.rows.length - 1 ? "1px solid rgba(255,255,255,0.025)" : "none",
+                      borderBottom: j < s.rows.length - 1 ? `1px solid ${ui.rowBorder}` : "none",
                     }}>
-                      <span style={{ fontSize: 13, color: "#777" }}>{k}</span>
-                      <span style={{ fontSize: 13, color: "#B0B0B4", fontWeight: 500, fontFamily: "'SF Mono', monospace" }}>{v}</span>
+                      <span className="att-t" style={{ fontSize: 13, color: ui.textMuted }}>{k}</span>
+                      <span className="att-t" style={{ fontSize: 13, color: ui.textMid, fontWeight: 500, fontFamily: "'SF Mono', monospace" }}>{v}</span>
                     </div>
                   ))}
                 </Card>
@@ -802,7 +973,7 @@ function AttentiaDesign() {
               <div style={{
                 fontSize: 11, letterSpacing: "0.12em", color: "#0090AA",
                 fontWeight: 600, marginBottom: 14, paddingBottom: 6,
-                borderBottom: "1px solid rgba(0,180,216,0.06)",
+                borderBottom: `1px solid ${ui.accentBorder}`,
               }}>MANUFACTURING PATH</div>
               <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 14 }}>
                 {[
@@ -811,26 +982,26 @@ function AttentiaDesign() {
                   { p: "Production", q: "1,000+ units", m: "Injection mold (~$6K tool)", c: "$48–55 COGS" },
                 ].map((p, i) => (
                   <Card key={i} style={{ padding: "12px 14px" }}>
-                    <div style={{ fontSize: 14, fontWeight: 600, color: "#B0B0B4", marginBottom: 5 }}>{p.p}</div>
-                    <div style={{ fontSize: 12, color: "#666" }}>{p.q}</div>
-                    <div style={{ fontSize: 12, color: "#666", marginBottom: 5 }}>{p.m}</div>
+                    <div className="att-t" style={{ fontSize: 14, fontWeight: 600, color: ui.textMid, marginBottom: 5 }}>{p.p}</div>
+                    <div className="att-t" style={{ fontSize: 12, color: ui.textMuted }}>{p.q}</div>
+                    <div className="att-t" style={{ fontSize: 12, color: ui.textMuted, marginBottom: 5 }}>{p.m}</div>
                     <div style={{ fontSize: 18, color: accent, fontWeight: 600, fontFamily: "'SF Mono', monospace" }}>{p.c}</div>
                   </Card>
                 ))}
               </div>
             </Card>
-            <div style={{
+            <div className="att-t" style={{
               marginTop: 16, padding: "16px 28px", borderRadius: 8,
-              background: "rgba(0,180,216,0.015)", border: "1px solid rgba(0,180,216,0.06)",
+              background: ui.accentBg, border: `1px solid ${ui.accentBorder}`,
               display: "flex", justifyContent: "space-between", alignItems: "center",
             }}>
               {[
                 { l: "Retail", v: "$165", c: accent },
-                { l: "COGS @ 1K", v: "$58–70", c: "#C0C0C4" },
+                { l: "COGS @ 1K", v: "$58–70", c: dark ? "#555" : "#C0C0C4" },
                 { l: "Gross Margin", v: "~58%", c: "#30DD70" },
               ].map((p, i) => (
                 <div key={i} style={{ textAlign: i === 0 ? "left" : i === 2 ? "right" : "center" }}>
-                  <div style={{ fontSize: 12, color: "#666" }}>{p.l}</div>
+                  <div className="att-t" style={{ fontSize: 12, color: ui.textMuted }}>{p.l}</div>
                   <div style={{ fontSize: 30, fontWeight: 700, color: p.c, fontFamily: "'SF Mono', monospace" }}>{p.v}</div>
                 </div>
               ))}
